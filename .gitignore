@@ -1,0 +1,10 @@
+*.iml
+/.idea/
+/.vscode/
+/fe/node_modules/
+/fe/target/
+/be/target/
+/fe/build/
+/fe/node/
+/fe/package-lock.json
+/fe/.env
