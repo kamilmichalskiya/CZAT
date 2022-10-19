@@ -12,6 +12,8 @@
     "@types/react-dom": "^18.0.6",
     "@types/react-redux": "7.1.24",
     "axios": "0.21.1",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "8.0.4",
@@ -27,7 +29,12 @@
     "start": "WATCHPACK_POLLING=true react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "prepare": "husky install",
+    "format": "npx prettier --write app"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": "npm run format"
   },
   "eslintConfig": {
     "extends": [
