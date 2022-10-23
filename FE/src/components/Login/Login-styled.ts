@@ -1,6 +1,31 @@
 import styled from 'styled-components';
 import { StyledIconBase } from '@styled-icons/styled-icon';
 
+export const LoginWrapper = styled.div`
+  max-width: ${({ theme }) => theme.size.xl};
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 35px 10px 25px;
+  background-color: ${({ theme }) => theme.colors.secondary};
+  color: ${({ theme }) => theme.colors.white};
+  box-shadow: 0 6px 5px -5px ${({ theme }) => theme.colors.secondary};
+
+  form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media ${({ theme }) => theme.breakpoints.sm} {
+    border-radius: 20px;
+    margin: 20px;
+  }
+`;
+
 export const IconStyleWrapper = styled.div`
   ${StyledIconBase} {
     color: ${({ theme }) => theme.colors.white};
@@ -34,24 +59,15 @@ export const GreenTextWrapper = styled.span`
   color: ${({ theme }) => theme.colors.primary};
 `;
 
-export const CloseIconStyleWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  width: 100%;
-  ${StyledIconBase} {
-    color: ${({ theme }) => theme.colors.white};
-  }
-  &:hover {
-    opacity: 0.9;
-    cursor: pointer;
-  }
-`;
-
 export const LoginTitle = styled.span`
+  margin-bottom: 30px;
   font-size: ${({ theme }) => theme.fontSize.xxl};
   font-weight: 700;
   letter-spacing: 0.08em;
-  margin-bottom: 20px;
+
+  @media ${({ theme }) => theme.breakpoints.sm} {
+    margin-bottom: 20px;
+  }
 `;
 
 export const TextSpan = styled.span`
@@ -65,7 +81,8 @@ export const UserInputWrapper = styled.div`
   align-items: center;
   margin: 5px 0;
   height: 55px;
-  width: 320px;
+  width: 100%;
+  max-width: 320px;
   padding: 10px 15px;
   margin-top: 20px;
 `;
@@ -88,70 +105,18 @@ export const UserInput = styled.input`
 `;
 
 export const PrimaryButton = styled.button`
+  height: 55px;
+  width: 100%;
+  max-width: 320px;
+  margin-top: 35px;
+  margin: 35px 0 90px;
   background-color: ${({ theme }) => theme.colors.primary};
   font-size: ${({ theme }) => theme.fontSize.l};
-  width: 320px;
-  height: 55px;
+  color: ${({ theme }) => theme.colors.white};
   border-radius: 100px;
   font-weight: 600;
-  margin-top: 35px;
-  color: ${({ theme }) => theme.colors.white};
   letter-spacing: 0.08em;
   &:hover {
     opacity: 0.9;
-  }
-`;
-
-export const DividerWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 50px;
-  width: 320px;
-`;
-
-export const Line = styled.div`
-  color: ${({ theme }) => theme.colors.secondary};
-  width: 120px;
-  border-top: 1px solid ${({ theme }) => theme.colors.white};
-`;
-
-export const IconsContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  margin-top: 20px;
-  width: 320px;
-`;
-
-export const IconsWrapper = styled.div`
-  background-color: ${({ theme }) => theme.colors.tertiary};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  &:hover {
-    opacity: 0.9;
-    cursor: pointer;
-  }
-`;
-
-export const GoogleIconStyleWrapper = styled.div`
-  ${StyledIconBase} {
-    color: #d0463b;
-  }
-`;
-
-export const FacebookIconStyleWrapper = styled.div`
-  ${StyledIconBase} {
-    color: #32519b;
-  }
-`;
-
-export const AppleIconStyleWrapper = styled.div`
-  ${StyledIconBase} {
-    color: black;
   }
 `;

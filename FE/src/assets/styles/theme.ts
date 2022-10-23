@@ -29,6 +29,7 @@ export const theme = {
     m: '14px',
     s: '12px',
   },
+  size: size,
   breakpoints: {
     xs: `(max-width: ${size.sm})`,
     sm: `(min-width: ${size.sm})`,
