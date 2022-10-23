@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { useTypedSelector } from '../../hooks/useTypedSelector';
+import { useActions } from '../../hooks/useActions';
 import {
   LoginWrapper,
   LoginTitle,
-  TextSpan,
+  LoginDescription,
   GreenTextWrapper,
   UserInputWrapper,
   UserInput,
@@ -16,44 +18,60 @@ import { EyeOutline } from '@styled-icons/evaicons-outline/EyeOutline';
 // import '@fontsource/montserrat';
 
 const Login = () => {
+  const [userLogin, setUserLogin] = useState('');
+  const [userPassword, setUserPassword] = useState('');
   const [passwordShown, setPasswordShown] = useState(false);
+  const { data, error, loading } = useTypedSelector((state) => state.login);
 
   const togglePassword = () => {
     setPasswordShown(!passwordShown);
   };
 
-  // const onSubmit = async (event) => {
-  //   event.preventDefault();
-  //   const requestBody = new FormData(event.target);
-  //   const requestOptions = {
-  //     method: 'POST',
-  //     body: new URLSearchParams(requestBody),
-  //   };
-  //   const authUrl = LinksCtx.login;
-  //   const response = await fetch(authUrl, requestOptions);
-  //   if (response.redirected) {
-  //     window.location = response.url;
-  //   }
-  // };
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const requestBody = new FormData(event.currentTarget);
+    const requestOptions = {
+      method: 'POST',
+      body: requestBody,
+    };
+    const response = await fetch('api/login', requestOptions);
+    if (response.redirected) {
+      window.location.href = response.url;
+    }
+  };
 
   return (
     <LoginWrapper>
       <LoginTitle>
         Witaj w <GreenTextWrapper>CZAT</GreenTextWrapper>!
       </LoginTitle>
-      <TextSpan>Zaloguj się, aby uzyskać dostęp do rozmów.</TextSpan>
-      <form>
+      <LoginDescription>Zaloguj się, aby uzyskać dostęp do rozmów.</LoginDescription>
+      <form onSubmit={(e) => onSubmit(e)}>
         <UserInputWrapper>
           <DarkIconStyleWrapper>
             <PersonFill size="18" />
           </DarkIconStyleWrapper>
-          <UserInput type="email" name="username" autoComplete="username" placeholder="Adres email" />
+          <UserInput
+            type="email"
+            name="username"
+            autoComplete="username"
+            placeholder="Login"
+            value={userLogin}
+            onChange={(e) => setUserLogin(e.target.value)}
+          />
         </UserInputWrapper>
         <UserInputWrapper>
           <DarkIconStyleWrapper>
             <Lock size="18" />
           </DarkIconStyleWrapper>
-          <UserInput type={passwordShown ? 'text' : 'password'} name="password" autoComplete="password" placeholder="Hasło" />
+          <UserInput
+            type={passwordShown ? 'text' : 'password'}
+            name="password"
+            autoComplete="password"
+            placeholder="Hasło"
+            value={userPassword}
+            onChange={(e) => setUserPassword(e.target.value)}
+          />
           <DarkEyeStyleWrapper onClick={togglePassword}>
             <EyeOutline size="24" />
           </DarkEyeStyleWrapper>

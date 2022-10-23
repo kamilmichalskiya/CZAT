@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { StyledIconBase } from '@styled-icons/styled-icon';
 
 export const LoginWrapper = styled.div`
+  min-height: 100vh;
   max-width: ${({ theme }) => theme.size.xl};
   display: flex;
   flex-direction: column;
@@ -21,6 +22,7 @@ export const LoginWrapper = styled.div`
   }
 
   @media ${({ theme }) => theme.breakpoints.sm} {
+    min-height: unset;
     border-radius: 20px;
     margin: 20px;
   }
@@ -70,7 +72,7 @@ export const LoginTitle = styled.span`
   }
 `;
 
-export const TextSpan = styled.span`
+export const LoginDescription = styled.span`
   letter-spacing: 0.08em;
   margin-bottom: 20px;
 `;
@@ -88,12 +90,13 @@ export const UserInputWrapper = styled.div`
 `;
 
 export const UserInput = styled.input`
-  font-size: ${({ theme }) => theme.fontSize.l};
-  background-color: ${({ theme }) => theme.colors.tertiary};
+  width: 100%;
+  height: 100%;
   margin-left: 20px;
   border: none;
-  height: 100%;
   flex-grow: 1;
+  font-size: ${({ theme }) => theme.fontSize.l};
+  background-color: ${({ theme }) => theme.colors.tertiary};
   ::placeholder {
     color: ${({ theme }) => theme.colors.placeholder};
     font-size: ${({ theme }) => theme.fontSize.s};

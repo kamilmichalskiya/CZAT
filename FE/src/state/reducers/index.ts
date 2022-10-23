@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
+import loginReducer from './loginReducer';
 import usersReducer from './usersReducer';
 
 const reducers = combineReducers({
-  repositories: usersReducer,
+  login: loginReducer,
+  users: usersReducer,
 });
 
 export default reducers;
