@@ -14,6 +14,20 @@ interface LoginUserErrorAction {
   payload: string;
 }
 
+interface RegisterUserAction {
+  type: ActionType.REGISTER_USER;
+}
+
+interface RegisterUserSuccessAction {
+  type: ActionType.REGISTER_USER_SUCCESS;
+  payload: { login: string; password: string; loggedIn: boolean };
+}
+
+interface RegisterUserErrorAction {
+  type: ActionType.REGISTER_USER_ERROR;
+  payload: string;
+}
+
 interface SearchUsersAction {
   type: ActionType.SEARCH_USERS;
 }
@@ -29,4 +43,5 @@ interface SearchUsersErrorAction {
 }
 
 export type LoginAction = LoginUserAction | LoginUserSuccessAction | LoginUserErrorAction;
+export type RegisterAction = RegisterUserAction | RegisterUserSuccessAction | RegisterUserErrorAction;
 export type UsersAction = SearchUsersAction | SearchUsersSuccessAction | SearchUsersErrorAction;

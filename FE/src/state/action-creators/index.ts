@@ -1,12 +1,7 @@
 import axios from 'axios';
 import { Dispatch } from 'redux';
 import { ActionType } from '../action-types';
-import { LoginAction, UsersAction } from '../actions';
-
-// interface UserCredencials {
-//   login: string;
-//   password: string;
-// }
+import { LoginAction, RegisterAction, UsersAction } from '../actions';
 
 export const loginUser = (credentials: any) => {
   return async (dispatch: Dispatch<LoginAction>) => {
@@ -26,10 +21,38 @@ export const loginUser = (credentials: any) => {
       });
       return;
     }
+    // TODO check location override after BE integration
     // window.location.href = response.url;
     dispatch({
       type: ActionType.LOGIN_USER_SUCCESS,
       payload: { login: credentials.login, password: credentials.password, loggedIn: true },
+    });
+  };
+};
+
+export const registerUser = (credentials: any) => {
+  return async (dispatch: Dispatch<RegisterAction>) => {
+    dispatch({
+      type: ActionType.REGISTER_USER,
+    });
+
+    const requestOptions = {
+      method: 'POST',
+      body: credentials,
+    };
+    const response = await fetch('api/register', requestOptions);
+    if (response.status !== 301) {
+      dispatch({
+        type: ActionType.REGISTER_USER_ERROR,
+        payload: 'Wystąpił problem z żądaniem! Spróbuj ponownie.',
+      });
+      return;
+    }
+    // TODO check location override after BE integration
+    // window.location.href = response.url;
+    dispatch({
+      type: ActionType.REGISTER_USER_SUCCESS,
+      payload: { login: credentials.login, password: credentials.password, username: credentials.username, loggedIn: true },
     });
   };
 };

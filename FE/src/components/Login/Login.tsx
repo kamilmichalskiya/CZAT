@@ -49,13 +49,13 @@ const Login: React.FC = () => {
   // toggle login/register view
   const [isLoginView, setIsLoginView] = useState(true);
 
-  const { loginUser } = useActions();
+  const { loginUser, registerUser } = useActions();
   const { error, loading } = useTypedSelector((state) => state.login);
 
   useEffect(() => {
     const { search: queryParams } = window.location;
     if (queryParams === '?error=true') {
-      toast.error('Podane dane logowania są nieprawidłowe.', { toastId: 'toast-id-error' });
+      toast.error('Podane dane logowania są nieprawidłowe. Spróbuj ponownie!', { toastId: 'toast-id-error' });
     }
   }, []);
 
@@ -95,11 +95,15 @@ const Login: React.FC = () => {
       validationErrors.password = 'Hasło jest zbyt krótkie!';
     }
 
-    if (Object.keys(validationErrors).length > 0) {
-      setFormErrors({ ...validationErrors });
-    } else {
-      loginUser({ login: formData.login, password: formData.password });
+    let error: keyof typeof validationErrors;
+    for (error in validationErrors) {
+      if (validationErrors[error]) {
+        setFormErrors({ ...validationErrors });
+        return;
+      }
     }
+
+    loginUser({ login: formData.login, password: formData.password });
   };
 
   const onRegisterSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
@@ -133,7 +137,15 @@ const Login: React.FC = () => {
       validationErrors.confirmPassword = 'Hasła muszą być identyczne!';
     }
 
-    setFormErrors({ ...validationErrors });
+    let error: keyof typeof validationErrors;
+    for (error in validationErrors) {
+      if (validationErrors[error]) {
+        setFormErrors({ ...validationErrors });
+        return;
+      }
+    }
+
+    registerUser({ login: formData.login, password: formData.password, username: formData.username });
   };
 
   return (
