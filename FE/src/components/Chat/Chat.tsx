@@ -1,5 +1,11 @@
+import { ChatWrapper, ChatHeader } from './Chat-styled';
+
 const Chat: React.FC = () => {
-  return <h1>Hello Czat!</h1>;
+  return (
+    <ChatWrapper>
+      <ChatHeader>Czat</ChatHeader>
+    </ChatWrapper>
+  );
 };
 
 export default Chat;
