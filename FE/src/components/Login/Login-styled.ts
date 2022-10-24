@@ -112,14 +112,73 @@ export const PrimaryButton = styled.button`
   width: 100%;
   max-width: 320px;
   margin-top: 35px;
-  margin: 35px 0 90px;
+  margin: 35px 0 60px;
   background-color: ${({ theme }) => theme.colors.primary};
   font-size: ${({ theme }) => theme.fontSize.l};
   color: ${({ theme }) => theme.colors.white};
   border-radius: 100px;
   font-weight: 600;
   letter-spacing: 0.08em;
+  transition: opacity 0.5s;
+
   &:hover {
     opacity: 0.9;
+    transition: opacity 0.5s;
+  }
+
+  @media ${({ theme }) => theme.breakpoints.sm} {
+    margin-bottom: 90px;
+  }
+`;
+
+export const InfoSpan = styled.span`
+  width: 100%;
+  padding: 0 20px 10px;
+  font-size: ${({ theme }) => theme.fontSize.l};
+  text-align: center;
+
+  @media ${({ theme }) => theme.breakpoints.sm} {
+    text-align: left;
+  }
+`;
+
+export const Footer = styled.div`
+  width: 100%;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @media ${({ theme }) => theme.breakpoints.sm} {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+`;
+
+export const SwitchViewAnchor = styled.a`
+  font-size: ${({ theme }) => theme.fontSize.xl};
+  text-align: center;
+  font-weight: bold;
+  transition: color 0.5s;
+
+  :hover {
+    cursor: pointer;
+    color: ${({ theme }) => theme.colors.primary};
+    transition: color 0.5s;
+  }
+
+  @media ${({ theme }) => theme.breakpoints.sm} {
+    text-align: left;
+  }
+`;
+
+export const CopyrightSpan = styled.span`
+  font-size: ${({ theme }) => theme.fontSize.l};
+  text-align: center;
+  padding-top: 30px;
+
+  @media ${({ theme }) => theme.breakpoints.sm} {
+    text-align: right;
+    padding-top: 0px;
   }
 `;
