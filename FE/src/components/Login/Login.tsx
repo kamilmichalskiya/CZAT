@@ -23,7 +23,8 @@ const Login: React.FC = () => {
   const [userLogin, setUserLogin] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [passwordShown, setPasswordShown] = useState(false);
-  const { data, error, loading } = useTypedSelector((state) => state.login);
+  const { loginUser } = useActions();
+  const { error, loading } = useTypedSelector((state) => state.login);
 
   useEffect(() => {
     const { search: queryParams } = window.location;
@@ -44,15 +45,7 @@ const Login: React.FC = () => {
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const requestBody = new FormData(event.currentTarget);
-    const requestOptions = {
-      method: 'POST',
-      body: requestBody,
-    };
-    const response = await fetch('api/login', requestOptions);
-    if (response.redirected) {
-      window.location.href = response.url;
-    }
+    loginUser({ login: userLogin, password: userPassword });
   };
 
   return (

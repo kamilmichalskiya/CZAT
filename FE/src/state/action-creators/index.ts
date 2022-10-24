@@ -3,30 +3,35 @@ import { Dispatch } from 'redux';
 import { ActionType } from '../action-types';
 import { LoginAction, UsersAction } from '../actions';
 
-export const loginUser = (credentials: Object) => {
+// interface UserCredencials {
+//   login: string;
+//   password: string;
+// }
+
+export const loginUser = (credentials: any) => {
   return async (dispatch: Dispatch<LoginAction>) => {
     dispatch({
       type: ActionType.LOGIN_USER,
     });
 
-    try {
-      const { data } = await axios.get('https://registry.npmjs.org/-/v1/search', {
-        params: {
-          text: credentials,
-        },
+    const requestOptions = {
+      method: 'POST',
+      body: credentials,
+    };
+    const response = await fetch('api/login', requestOptions);
+    if (!response.ok) {
+      dispatch({
+        type: ActionType.LOGIN_USER_ERROR,
+        payload: 'Wystąpił problem z żądaniem! Spróbuj ponownie.',
       });
-
+      return;
+    }
+    if (response.redirected) {
+      window.location.href = response.url;
       dispatch({
         type: ActionType.LOGIN_USER_SUCCESS,
-        payload: data,
+        payload: { login: credentials.login, password: credentials.password, loggedIn: true },
       });
-    } catch (err) {
-      if (err instanceof Error) {
-        dispatch({
-          type: ActionType.LOGIN_USER_ERROR,
-          payload: err.message,
-        });
-      }
     }
   };
 };
