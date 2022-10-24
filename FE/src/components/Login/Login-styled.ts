@@ -77,7 +77,11 @@ export const LoginDescription = styled.span`
   margin-bottom: 20px;
 `;
 
-export const UserInputWrapper = styled.div`
+interface UserInputWrapperProps {
+  hasError: boolean;
+}
+
+export const UserInputWrapper = styled.div<UserInputWrapperProps>`
   background-color: ${({ theme }) => theme.colors.tertiary};
   display: flex;
   align-items: center;
@@ -87,6 +91,8 @@ export const UserInputWrapper = styled.div`
   max-width: 320px;
   padding: 10px 15px;
   margin-top: 20px;
+  border: 2px solid;
+  border-color: ${({ hasError, theme }) => (hasError ? theme.colors.error : theme.colors.tertiary)};
 `;
 
 export const UserInput = styled.input`
@@ -181,4 +187,10 @@ export const CopyrightSpan = styled.span`
     text-align: right;
     padding-top: 0px;
   }
+`;
+
+export const ErrorText = styled.p`
+  font-size: 1rem;
+  margin: 0 0 5px;
+  color: ${({ theme }) => theme.colors.error};
 `;
