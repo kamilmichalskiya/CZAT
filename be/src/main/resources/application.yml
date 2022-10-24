@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: czat
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/czat
+    username: postgres
+    password: postgres
+  data:
+    mongodb:
+      uri: mongodb://root:root@localhost:27017/czat
+      database: czat
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+server:
+  address: 0.0.0.0
+  port: 8080
