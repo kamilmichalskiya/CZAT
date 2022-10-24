@@ -3,9 +3,9 @@ import { store } from '../state';
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyle } from '../assets/styles/GlobalStyle';
 import { theme } from '../assets/styles/theme';
-import Login from '../components/Login/Login';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import App from './App';
 
 const Root = () => {
   return (
@@ -23,7 +23,7 @@ const Root = () => {
           draggable
           pauseOnHover
         />
-        <Login />
+        <App />
       </ThemeProvider>
     </Provider>
   );

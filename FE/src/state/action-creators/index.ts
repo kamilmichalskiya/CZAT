@@ -19,20 +19,18 @@ export const loginUser = (credentials: any) => {
       body: credentials,
     };
     const response = await fetch('api/login', requestOptions);
-    if (!response.ok) {
+    if (response.status !== 301) {
       dispatch({
         type: ActionType.LOGIN_USER_ERROR,
         payload: 'Wystąpił problem z żądaniem! Spróbuj ponownie.',
       });
       return;
     }
-    if (response.redirected) {
-      window.location.href = response.url;
-      dispatch({
-        type: ActionType.LOGIN_USER_SUCCESS,
-        payload: { login: credentials.login, password: credentials.password, loggedIn: true },
-      });
-    }
+    // window.location.href = response.url;
+    dispatch({
+      type: ActionType.LOGIN_USER_SUCCESS,
+      payload: { login: credentials.login, password: credentials.password, loggedIn: true },
+    });
   };
 };
 
