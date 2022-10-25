@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
-import loginReducer from './loginReducer';
+import userSessionReducer from './userSessionReducer';
 import usersReducer from './usersReducer';
 
 const reducers = combineReducers({
-  login: loginReducer,
+  userSession: userSessionReducer,
   users: usersReducer,
 });
 
