@@ -3,9 +3,9 @@ import Chat from '../components/Chat/Chat';
 import { useTypedSelector } from '../hooks/useTypedSelector';
 
 const App: React.FC = () => {
-  const { data } = useTypedSelector((state) => state.login);
+  const { loggedIn } = useTypedSelector((state) => state.userSession);
 
-  return <>{data.loggedIn ? <Chat /> : <Login />}</>;
+  return <>{loggedIn ? <Chat /> : <Login />}</>;
 };
 
 export default App;

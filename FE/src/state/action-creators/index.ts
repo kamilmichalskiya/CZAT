@@ -14,15 +14,13 @@ export const loginUser = (credentials: any) => {
       body: credentials,
     };
     const response = await fetch('api/login', requestOptions);
-    if (response.status !== 301) {
+    if (response.status === 403 || response.status !== 301) {
       dispatch({
         type: ActionType.LOGIN_USER_ERROR,
         payload: 'Wystąpił problem z żądaniem! Spróbuj ponownie.',
       });
       return;
     }
-    // TODO check location override after BE integration
-    // window.location.href = response.url;
     dispatch({
       type: ActionType.LOGIN_USER_SUCCESS,
       payload: { login: credentials.login, password: credentials.password, loggedIn: true },
@@ -52,7 +50,7 @@ export const registerUser = (credentials: any) => {
     // window.location.href = response.url;
     dispatch({
       type: ActionType.REGISTER_USER_SUCCESS,
-      payload: { login: credentials.login, password: credentials.password, username: credentials.username, loggedIn: true },
+      payload: { login: credentials.login, password: credentials.password, loggedIn: true },
     });
   };
 };

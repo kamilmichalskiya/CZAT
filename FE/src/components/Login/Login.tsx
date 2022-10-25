@@ -28,14 +28,12 @@ interface FormData {
   login: string;
   password: string;
   confirmPassword?: string;
-  username?: string;
 }
 
 const initialFormData = {
   login: '',
   password: '',
   confirmPassword: '',
-  username: '',
 };
 
 const emailRegex =
@@ -50,7 +48,7 @@ const Login: React.FC = () => {
   const [isLoginView, setIsLoginView] = useState(true);
 
   const { loginUser, registerUser } = useActions();
-  const { error, loading } = useTypedSelector((state) => state.login);
+  const { error, loading } = useTypedSelector((state) => state.userSession);
 
   useEffect(() => {
     const { search: queryParams } = window.location;
@@ -79,21 +77,7 @@ const Login: React.FC = () => {
 
   const onLoginSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    const validationErrors: FormData = { ...initialFormData };
-
-    if (!formData.login) {
-      validationErrors.login = 'Adres e-mail jest wymagany!';
-    } else if (formData.login.length < 4) {
-      validationErrors.login = 'Adres e-mail jest zbyt krótki!';
-    } else if (!formData.login.match(emailRegex)) {
-      validationErrors.login = 'Adres e-mail ma niepoprawny format!';
-    }
-
-    if (!formData.password) {
-      validationErrors.password = 'Hasło jest wymagane!';
-    } else if (formData.password.length < 4) {
-      validationErrors.password = 'Hasło jest zbyt krótkie!';
-    }
+    const validationErrors = getValidationErrors('login');
 
     let error: keyof typeof validationErrors;
     for (error in validationErrors) {
@@ -108,12 +92,21 @@ const Login: React.FC = () => {
 
   const onRegisterSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    const validationErrors: FormData = { ...initialFormData };
-    if (!formData.username) {
-      validationErrors.username = 'Nazwa użytkownika jest wymagana!';
-    } else if (formData.username.length < 4) {
-      validationErrors.username = 'Nazwa użytkownika jest zbyt krótka!';
+    const validationErrors = getValidationErrors('register');
+
+    let error: keyof typeof validationErrors;
+    for (error in validationErrors) {
+      if (validationErrors[error]) {
+        setFormErrors({ ...validationErrors });
+        return;
+      }
     }
+
+    registerUser({ login: formData.login, password: formData.password });
+  };
+
+  const getValidationErrors = (type: 'login' | 'register' = 'login'): FormData => {
+    const validationErrors = { ...initialFormData };
 
     if (!formData.login) {
       validationErrors.login = 'Adres e-mail jest wymagany!';
@@ -129,23 +122,17 @@ const Login: React.FC = () => {
       validationErrors.password = 'Hasło jest zbyt krótkie!';
     }
 
-    if (!formData.confirmPassword) {
-      validationErrors.confirmPassword = 'Hasło jest wymagane!';
-    } else if (formData.confirmPassword.length < 4) {
-      validationErrors.confirmPassword = 'Hasło jest zbyt krótkie!';
-    } else if (formData.confirmPassword !== formData.password) {
-      validationErrors.confirmPassword = 'Hasła muszą być identyczne!';
-    }
-
-    let error: keyof typeof validationErrors;
-    for (error in validationErrors) {
-      if (validationErrors[error]) {
-        setFormErrors({ ...validationErrors });
-        return;
+    if (type === 'register') {
+      if (!formData.confirmPassword) {
+        validationErrors.confirmPassword = 'Hasło jest wymagane!';
+      } else if (formData.confirmPassword.length < 4) {
+        validationErrors.confirmPassword = 'Hasło jest zbyt krótkie!';
+      } else if (formData.confirmPassword !== formData.password) {
+        validationErrors.confirmPassword = 'Hasła muszą być identyczne!';
       }
     }
 
-    registerUser({ login: formData.login, password: formData.password, username: formData.username });
+    return validationErrors;
   };
 
   return (
@@ -156,26 +143,6 @@ const Login: React.FC = () => {
       </LoginTitle>
       <LoginDescription>{isLoginView ? 'Zaloguj się, aby uzyskać dostęp do rozmów.' : 'Zarejestruj się, aby rozpocząć rozmowy!'}</LoginDescription>
       <form onSubmit={isLoginView ? (e) => onLoginSubmit(e) : (e) => onRegisterSubmit(e)}>
-        {isLoginView ? (
-          ''
-        ) : (
-          <>
-            <UserInputWrapper hasError={!!formErrors.username}>
-              <DarkIconStyleWrapper>
-                <PersonFill size="18" />
-              </DarkIconStyleWrapper>
-              <UserInput
-                type="text"
-                name="username"
-                autoComplete="username"
-                placeholder="Nazwa użytkownika"
-                value={formData.username}
-                onChange={(e) => onValueChangedHandler(e)}
-              />
-            </UserInputWrapper>
-            <ErrorText>{formErrors.username}</ErrorText>
-          </>
-        )}
         <UserInputWrapper hasError={!!formErrors.login}>
           <DarkIconStyleWrapper>
             <PersonFill size="18" />
