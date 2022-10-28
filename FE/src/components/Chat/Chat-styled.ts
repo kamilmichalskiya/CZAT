@@ -50,6 +50,12 @@ export const InactiveIconStyleWrapper = styled(IconStyleWrapper)`
   }
 `;
 
+export const GreenIconStyleWrapper = styled(IconStyleWrapper)`
+  ${StyledIconBase} {
+    color: ${({ theme }) => theme.colors.primary};
+  }
+`;
+
 export const ChatHeader = styled.div`
   grid-area: 1 / 1 / 2 / 3;
   padding: 20px;
@@ -147,10 +153,31 @@ export const RightPanelHeader = styled.div`
   display: flex;
   align-items: center;
   height: 5em;
-  padding-top: 10px;
-  border-bottom: 5px solid ${({ theme }) => theme.colors.secondary};
+  padding: 10px 10px 0;
 `;
 
 export const RightPanelContent = styled.div`
   flex-grow: 1;
+  border-top: 1px solid ${({ theme }) => theme.colors.lightGrey};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.lightGrey};
+`;
+
+export const RightPanelBottomWrapper = styled.div`
+  height: 4em;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+
+  input {
+    flex-grow: 1;
+    padding: 10px;
+    font-weight: bold;
+    color: ${({ theme }) => theme.colors.white};
+    background-color: ${({ theme }) => theme.colors.grey};
+    border: none;
+    font-size: ${({ theme }) => theme.fontSize.m};
+    &:focus {
+      outline: none;
+    }
+  }
 `;

@@ -5,6 +5,7 @@ import {
   LeftPanel,
   SearchBarWrapper,
   InactiveIconStyleWrapper,
+  GreenIconStyleWrapper,
   ListElementWrapper,
   ListElementPhoto,
   ListElementContainer,
@@ -13,9 +14,11 @@ import {
   RightPanel,
   RightPanelHeader,
   RightPanelContent,
+  RightPanelBottomWrapper,
 } from './Chat-styled';
 import { toast } from 'react-toastify';
 import { MagnifyingGlass } from '@styled-icons/entypo/MagnifyingGlass';
+import { Send } from '@styled-icons/boxicons-solid/Send';
 
 const Chat: React.FC = () => {
   useEffect(() => {
@@ -96,6 +99,12 @@ const Chat: React.FC = () => {
           </ListElementWrapper>
         </RightPanelHeader>
         <RightPanelContent></RightPanelContent>
+        <RightPanelBottomWrapper>
+          <input placeholder="Wpisz wiadomość"></input>
+          <GreenIconStyleWrapper>
+            <Send size="36" />
+          </GreenIconStyleWrapper>
+        </RightPanelBottomWrapper>
       </RightPanel>
     </ChatWrapper>
   );
