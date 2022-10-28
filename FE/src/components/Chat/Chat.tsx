@@ -24,17 +24,16 @@ const Chat: React.FC = () => {
 
   return (
     <ChatWrapper>
-      <ChatHeader>CZAT - Co Za Ambitny Temat</ChatHeader>
+      <ChatHeader>CZAT</ChatHeader>
       <LeftPanel>
         <SearchBarWrapper>
           <InactiveIconStyleWrapper>
             <MagnifyingGlass size="24" />
           </InactiveIconStyleWrapper>
-          <span>Szukaj</span>
+          <input placeholder="Szukaj"></input>
         </SearchBarWrapper>
         <ListElementWrapper>
-          <ListPhotoWrapper>N</ListPhotoWrapper>
-          <ListContainerUpperRow></ListContainerUpperRow>
+          <ListPhotoWrapper>{Array.from('Nickname123')[0]}</ListPhotoWrapper>
           <ListContainerWrapper>
             <ListContainerUpperRow>
               <ListContainerUsername>Nickname123</ListContainerUsername>
@@ -44,8 +43,7 @@ const Chat: React.FC = () => {
           </ListContainerWrapper>
         </ListElementWrapper>
         <ListElementWrapper>
-          <ListPhotoWrapper>N</ListPhotoWrapper>
-          <ListContainerUpperRow></ListContainerUpperRow>
+          <ListPhotoWrapper>{Array.from('Nickname123')[0]}</ListPhotoWrapper>
           <ListContainerWrapper>
             <ListContainerUpperRow>
               <ListContainerUsername>Nickname123</ListContainerUsername>
@@ -55,8 +53,17 @@ const Chat: React.FC = () => {
           </ListContainerWrapper>
         </ListElementWrapper>
         <ListElementWrapper>
-          <ListPhotoWrapper>N</ListPhotoWrapper>
-          <ListContainerUpperRow></ListContainerUpperRow>
+          <ListPhotoWrapper>{Array.from('Anothernick123')[0]}</ListPhotoWrapper>
+          <ListContainerWrapper>
+            <ListContainerUpperRow>
+              <ListContainerUsername>Anothernick123</ListContainerUsername>
+              <ListContainerLastMsgTime>1h ago</ListContainerLastMsgTime>
+            </ListContainerUpperRow>
+            <ListContainerMessage>Lorem ipsum dolor sit amet</ListContainerMessage>
+          </ListContainerWrapper>
+        </ListElementWrapper>
+        <ListElementWrapper>
+          <ListPhotoWrapper>{Array.from('Nickname123')[0]}</ListPhotoWrapper>
           <ListContainerWrapper>
             <ListContainerUpperRow>
               <ListContainerUsername>Nickname123</ListContainerUsername>
@@ -66,19 +73,7 @@ const Chat: React.FC = () => {
           </ListContainerWrapper>
         </ListElementWrapper>
         <ListElementWrapper>
-          <ListPhotoWrapper>N</ListPhotoWrapper>
-          <ListContainerUpperRow></ListContainerUpperRow>
-          <ListContainerWrapper>
-            <ListContainerUpperRow>
-              <ListContainerUsername>Nickname123</ListContainerUsername>
-              <ListContainerLastMsgTime>1h ago</ListContainerLastMsgTime>
-            </ListContainerUpperRow>
-            <ListContainerMessage>Lorem ipsum dolor sit amet</ListContainerMessage>
-          </ListContainerWrapper>
-        </ListElementWrapper>
-        <ListElementWrapper>
-          <ListPhotoWrapper>N</ListPhotoWrapper>
-          <ListContainerUpperRow></ListContainerUpperRow>
+          <ListPhotoWrapper>{Array.from('Nickname123')[0]}</ListPhotoWrapper>
           <ListContainerWrapper>
             <ListContainerUpperRow>
               <ListContainerUsername>Nickname123</ListContainerUsername>

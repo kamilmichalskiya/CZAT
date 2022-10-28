@@ -51,18 +51,16 @@ export const InactiveIconStyleWrapper = styled(IconStyleWrapper)`
 `;
 
 export const ChatHeader = styled.div`
-  /* width: 100%; */
-  /* margin: 10px 0 10px 5px; */
   grid-area: 1 / 1 / 2 / 3;
+  padding: 0 20px;
   font-size: ${({ theme }) => theme.fontSize.xxl};
   color: ${({ theme }) => theme.colors.primary};
   text-align: left;
-  font-weight: 600;
+  font-weight: bold;
 `;
 
 export const LeftPanel = styled.div`
   grid-area: 2 / 1 / 3 / 2;
-  /* background-color: ${({ theme }) => theme.colors.grey}; */
   border-radius: 10px;
   border: 2px solid ${({ theme }) => theme.colors.grey};
   padding: 10px;
@@ -70,13 +68,22 @@ export const LeftPanel = styled.div`
 
 export const SearchBarWrapper = styled.div`
   display: flex;
-  width: 100%;
-  margin: 10px;
-  /* ::placeholder {
+  align-items: center;
+  font-size: 0.8em;
+  padding: 0 10px;
+  margin: 10px 0 15px;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.grey};
+  input {
+    flex-grow: 1;
+    padding: 5px;
+    font-weight: bold;
     color: ${({ theme }) => theme.colors.white};
-    font-size: ${({ theme }) => theme.fontSize.xl};
-    letter-spacing: 0.08em;
-  } */
+    background-color: ${({ theme }) => theme.colors.secondary};
+    border: none;
+    &:focus {
+      outline: none;
+    }
+  }
 `;
 
 export const ListElementWrapper = styled.div`
@@ -94,8 +101,8 @@ export const ListPhotoWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 50px;
-  height: 50px;
+  width: 45px;
+  height: 45px;
   border-radius: 50px;
   font-size: 2em;
   font-weight: bold;
