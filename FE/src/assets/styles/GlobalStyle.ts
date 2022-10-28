@@ -12,11 +12,13 @@ export const GlobalStyle = createGlobalStyle`
 
  body {
   font-family: 'Montserrat', sans-serif;
+  letter-spacing: .06em;
   margin: 0;
  }
 
  a, button {
   font-family: 'Montserrat', sans-serif;
+  letter-spacing: .1em;
   border: none;
  }
 
