@@ -7,10 +7,10 @@ export const ChatWrapper = styled.div`
   max-width: ${({ theme }) => theme.size.xl};
   display: grid;
   grid-template-columns: 0.35fr 0.65fr;
-  grid-template-rows: 0.15fr 0.85fr;
+  grid-template-rows: 0.05fr 0.95fr;
   grid-column-gap: 10px;
   grid-row-gap: 10px;
-  padding: 35px 10px 25px;
+  padding: 10px 10px 25px;
   background-color: ${({ theme }) => theme.colors.secondary};
   color: ${({ theme }) => theme.colors.white};
   box-shadow: 0 6px 5px -5px ${({ theme }) => theme.colors.secondary};
@@ -24,7 +24,7 @@ export const ChatWrapper = styled.div`
   }
 
   @media ${({ theme }) => theme.breakpoints.sm} {
-    padding: 35px 10px 25px;
+    padding: 10px 10px 25px;
     min-height: unset;
     border-radius: 20px;
     margin: 20px;
@@ -52,11 +52,12 @@ export const InactiveIconStyleWrapper = styled(IconStyleWrapper)`
 
 export const ChatHeader = styled.div`
   grid-area: 1 / 1 / 2 / 3;
-  padding: 0 20px;
+  padding: 20px;
   font-size: ${({ theme }) => theme.fontSize.xxl};
   color: ${({ theme }) => theme.colors.primary};
   text-align: left;
   font-weight: bold;
+  border-bottom: 2px solid ${({ theme }) => theme.colors.grey};
 `;
 
 export const LeftPanel = styled.div`
@@ -71,11 +72,12 @@ export const SearchBarWrapper = styled.div`
   align-items: center;
   font-size: 0.8em;
   padding: 0 10px;
-  margin: 10px 0 15px;
+  margin: 5px 0;
   border-bottom: 1px solid ${({ theme }) => theme.colors.grey};
+
   input {
     flex-grow: 1;
-    padding: 5px;
+    padding: 10px;
     font-weight: bold;
     color: ${({ theme }) => theme.colors.white};
     background-color: ${({ theme }) => theme.colors.secondary};
@@ -97,7 +99,7 @@ export const ListElementWrapper = styled.div`
   border-radius: 10px;
 `;
 
-export const ListPhotoWrapper = styled.div`
+export const ListElementPhoto = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -110,38 +112,45 @@ export const ListPhotoWrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.primary};
 `;
 
-export const ListContainerWrapper = styled.div`
+export const ListElementContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   margin-left: 15px;
   flex-grow: 1;
   height: 100%;
-  font-size: ${({ theme }) => theme.fontSize.m};
+  padding: 4px 0;
+  font-size: ${({ theme }) => theme.fontSize.s};
   color: ${({ theme }) => theme.colors.lightGrey};
 `;
 
-export const ListContainerUpperRow = styled.div`
+export const ListElementUpperRow = styled.div`
   display: flex;
   justify-content: space-between;
 `;
 
-export const ListContainerUsername = styled.div`
+export const ListElementUsername = styled.div`
   font-weight: bold;
   color: ${({ theme }) => theme.colors.white};
-`;
-
-export const ListContainerLastMsgTime = styled.div`
-  font-weight: initial;
-  font-size: ${({ theme }) => theme.fontSize.s};
-`;
-
-export const ListContainerMessage = styled.div`
-  font-weight: initial;
+  font-size: ${({ theme }) => theme.fontSize.m};
 `;
 
 export const RightPanel = styled.div`
   grid-area: 2 / 2 / 3 / 3;
   background-color: ${({ theme }) => theme.colors.grey};
   border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+`;
+
+export const RightPanelHeader = styled.div`
+  display: flex;
+  align-items: center;
+  height: 5em;
+  padding-top: 10px;
+  border-bottom: 5px solid ${({ theme }) => theme.colors.secondary};
+`;
+
+export const RightPanelContent = styled.div`
+  flex-grow: 1;
 `;
