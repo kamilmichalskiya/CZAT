@@ -4,6 +4,7 @@ import {
   ChatHeader,
   LeftPanel,
   SearchBarWrapper,
+  IconStyleWrapper,
   InactiveIconStyleWrapper,
   GreenIconStyleWrapper,
   ListElementWrapper,
@@ -19,6 +20,7 @@ import {
 import { toast } from 'react-toastify';
 import { MagnifyingGlass } from '@styled-icons/entypo/MagnifyingGlass';
 import { Send } from '@styled-icons/boxicons-solid/Send';
+import { LogOut } from '@styled-icons/entypo/LogOut';
 
 const Chat: React.FC = () => {
   useEffect(() => {
@@ -27,7 +29,12 @@ const Chat: React.FC = () => {
 
   return (
     <ChatWrapper>
-      <ChatHeader>CZAT</ChatHeader>
+      <ChatHeader>
+        <span>CZAT</span>
+        <IconStyleWrapper>
+          <LogOut size="32" />
+        </IconStyleWrapper>
+      </ChatHeader>
       <LeftPanel>
         <SearchBarWrapper>
           <InactiveIconStyleWrapper>
@@ -102,7 +109,7 @@ const Chat: React.FC = () => {
         <RightPanelBottomWrapper>
           <input placeholder="Wpisz wiadomość"></input>
           <GreenIconStyleWrapper>
-            <Send size="36" />
+            <Send size="32" />
           </GreenIconStyleWrapper>
         </RightPanelBottomWrapper>
       </RightPanel>

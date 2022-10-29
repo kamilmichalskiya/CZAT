@@ -58,6 +58,8 @@ export const GreenIconStyleWrapper = styled(IconStyleWrapper)`
 
 export const ChatHeader = styled.div`
   grid-area: 1 / 1 / 2 / 3;
+  display: flex;
+  justify-content: space-between;
   padding: 20px;
   font-size: ${({ theme }) => theme.fontSize.xxl};
   color: ${({ theme }) => theme.colors.primary};
