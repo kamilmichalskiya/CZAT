@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import {
   ChatWrapper,
   ChatHeader,
-  LeftPanel,
+  LeftPanelWrapper,
   SearchBarWrapper,
   SecondaryButton,
   IconStyleWrapper,
@@ -13,9 +13,10 @@ import {
   ListElementContainer,
   ListElementUpperRow,
   ListElementUsername,
-  RightPanel,
+  RightPanelWrapper,
   RightPanelHeader,
-  RightPanelContent,
+  RightPanelHeaderContent,
+  RightPanelConversation,
   RightPanelBottomWrapper,
 } from './Chat-styled';
 import { toast } from 'react-toastify';
@@ -37,7 +38,7 @@ const Chat: React.FC = () => {
         </IconStyleWrapper>
       </ChatHeader>
 
-      <LeftPanel>
+      <LeftPanelWrapper>
         <SearchBarWrapper>
           <InactiveIconStyleWrapper>
             <MagnifyingGlass size="20" />
@@ -95,11 +96,11 @@ const Chat: React.FC = () => {
             <span>Lorem ipsum dolor sit amet</span>
           </ListElementContainer>
         </ListElementWrapper>
-      </LeftPanel>
+      </LeftPanelWrapper>
 
-      <RightPanel>
+      <RightPanelWrapper>
         <RightPanelHeader>
-          <ListElementWrapper>
+          <RightPanelHeaderContent>
             <ListElementPhoto>{Array.from('Nickname123')[0]}</ListElementPhoto>
             <ListElementContainer>
               <ListElementUpperRow>
@@ -107,16 +108,16 @@ const Chat: React.FC = () => {
               </ListElementUpperRow>
               <span>1h ago</span>
             </ListElementContainer>
-          </ListElementWrapper>
+          </RightPanelHeaderContent>
         </RightPanelHeader>
-        <RightPanelContent></RightPanelContent>
+        <RightPanelConversation></RightPanelConversation>
         <RightPanelBottomWrapper>
           <input placeholder="Wpisz wiadomość"></input>
           <GreenIconStyleWrapper>
             <Send size="26" />
           </GreenIconStyleWrapper>
         </RightPanelBottomWrapper>
-      </RightPanel>
+      </RightPanelWrapper>
     </ChatWrapper>
   );
 };

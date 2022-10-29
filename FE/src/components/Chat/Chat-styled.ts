@@ -2,18 +2,21 @@ import styled from 'styled-components';
 import { StyledIconBase } from '@styled-icons/styled-icon';
 
 export const ChatWrapper = styled.div`
-  /* min-height: 100vh; */
+  // min-height: 100vh;  <-- nie działa jeśli parent nie ma ustawionej wysokości
   height: 900px;
+  /* min-width: 100vw; */
   max-width: ${({ theme }) => theme.size.xl};
   display: grid;
-  grid-template-columns: 0.35fr 0.65fr;
-  grid-template-rows: 0.05fr 0.95fr;
+  grid-template-columns: 0.7fr 1.3fr;
+  grid-template-rows: 0.15fr 1.85fr;
   grid-column-gap: 10px;
   grid-row-gap: 10px;
   padding: 10px 10px 25px;
   background-color: ${({ theme }) => theme.colors.secondary};
   color: ${({ theme }) => theme.colors.white};
   box-shadow: 0 6px 5px -5px ${({ theme }) => theme.colors.secondary};
+  margin-left: auto;
+  margin-right: auto;
 
   form {
     width: 100%;
@@ -68,11 +71,12 @@ export const ChatHeader = styled.div`
   border-bottom: 2px solid ${({ theme }) => theme.colors.grey};
 `;
 
-export const LeftPanel = styled.div`
+export const LeftPanelWrapper = styled.div`
   grid-area: 2 / 1 / 3 / 2;
   border-radius: 10px;
   border: 2px solid ${({ theme }) => theme.colors.grey};
   padding: 10px;
+  width: 100%;
 `;
 
 export const SearchBarWrapper = styled.div`
@@ -112,10 +116,6 @@ export const SecondaryButton = styled.button`
     background-color: ${({ theme }) => theme.colors.lightGrey};
     transition: 0.3s;
   }
-
-  /* @media ${({ theme }) => theme.breakpoints.sm} {
-    margin-bottom: 90px;
-  } */
 `;
 
 export const ListElementPhoto = styled.div`
@@ -160,7 +160,7 @@ export const ListElementWrapper = styled.div`
   padding: 10px 15px;
   margin-bottom: 10px;
   background-color: ${({ theme }) => theme.colors.grey};
-  width: 100%;
+  min-width: 50px;
   height: 4em;
   border-radius: 10px;
 
@@ -179,12 +179,13 @@ export const ListElementWrapper = styled.div`
   }
 `;
 
-export const RightPanel = styled.div`
+export const RightPanelWrapper = styled.div`
   grid-area: 2 / 2 / 3 / 3;
   background-color: ${({ theme }) => theme.colors.grey};
   border-radius: 10px;
   display: flex;
   flex-direction: column;
+  width: 100%;
 `;
 
 export const RightPanelHeader = styled.div`
@@ -192,21 +193,18 @@ export const RightPanelHeader = styled.div`
   align-items: center;
   height: 5em;
   padding: 10px 10px 0;
-  &:hover ${ListElementWrapper} {
-    background-color: ${({ theme }) => theme.colors.grey};
-    cursor: default;
-
-    span {
-      color: ${({ theme }) => theme.colors.lightGrey};
-    }
-    ${ListElementUsername} {
-      color: ${({ theme }) => theme.colors.white};
-    }
-  }
 `;
-// TODO: działa, ale zrefactoryzować żeby nie zerować hover tylko nadawać
 
-export const RightPanelContent = styled.div`
+export const RightPanelHeaderContent = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  background-color: ${({ theme }) => theme.colors.grey};
+  height: 4em;
+`;
+
+export const RightPanelConversation = styled.div`
   flex-grow: 1;
   border-top: 1px solid ${({ theme }) => theme.colors.lightGrey};
   border-bottom: 1px solid ${({ theme }) => theme.colors.lightGrey};
