@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.kmp.be.api.chats.entity.UiChat;
 import pl.kmp.be.api.messages.entity.UiMessage;
-import pl.kmp.be.bf.chats.boundary.ChatsBF;
-import pl.kmp.be.bf.messages.boundary.MessagesBF;
+import pl.kmp.be.bm.chats.boundary.ChatsBF;
+import pl.kmp.be.bm.messages.boundary.MessagesBF;
 
 import java.util.List;
 

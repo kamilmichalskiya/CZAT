@@ -1,9 +1,9 @@
-package pl.kmp.be.bf.chats.control;
+package pl.kmp.be.bm.chats.control;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import pl.kmp.be.bf.chats.entity.Chat;
+import pl.kmp.be.bm.chats.entity.Chat;
 
 import java.util.List;
 import java.util.Optional;

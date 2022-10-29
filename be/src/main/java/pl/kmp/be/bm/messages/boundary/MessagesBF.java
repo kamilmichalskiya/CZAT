@@ -1,10 +1,10 @@
-package pl.kmp.be.bf.messages.boundary;
+package pl.kmp.be.bm.messages.boundary;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.kmp.be.api.messages.entity.UiMessage;
-import pl.kmp.be.bf.messages.control.MessagesRepository;
-import pl.kmp.be.bf.messages.entity.Message;
+import pl.kmp.be.bm.messages.control.MessagesRepository;
+import pl.kmp.be.bm.messages.entity.Message;
 
 @RequiredArgsConstructor
 @Service

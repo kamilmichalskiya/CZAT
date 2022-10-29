@@ -1,10 +1,10 @@
-package pl.kmp.be.bf.chats.entity;
+package pl.kmp.be.bm.chats.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import pl.kmp.be.bf.users.entity.User;
+import pl.kmp.be.bm.users.entity.User;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.kmp.be.api.users.entity.UiUser;
-import pl.kmp.be.bf.users.boundary.UsersBF;
+import pl.kmp.be.bm.users.boundary.UsersBF;
 
 @RequiredArgsConstructor
 @RestController
