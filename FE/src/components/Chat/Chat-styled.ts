@@ -213,7 +213,7 @@ export const RightPanelContent = styled.div`
 `;
 
 export const RightPanelBottomWrapper = styled.div`
-  height: 4em;
+  height: 3em;
   display: flex;
   align-items: center;
   padding: 0 20px;

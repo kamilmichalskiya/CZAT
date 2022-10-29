@@ -113,7 +113,7 @@ const Chat: React.FC = () => {
         <RightPanelBottomWrapper>
           <input placeholder="Wpisz wiadomość"></input>
           <GreenIconStyleWrapper>
-            <Send size="32" />
+            <Send size="26" />
           </GreenIconStyleWrapper>
         </RightPanelBottomWrapper>
       </RightPanel>
