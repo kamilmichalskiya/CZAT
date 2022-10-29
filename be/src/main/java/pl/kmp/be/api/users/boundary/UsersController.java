@@ -11,7 +11,7 @@ import pl.kmp.be.bm.users.boundary.UsersBF;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api")
+@RequestMapping(name = "/api", produces = "application/hal+json")
 public class UsersController {
     private final UsersBF usersBF;
 

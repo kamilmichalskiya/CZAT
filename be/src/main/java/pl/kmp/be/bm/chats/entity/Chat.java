@@ -1,6 +1,5 @@
 package pl.kmp.be.bm.chats.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,13 +12,13 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "chats")
 public class Chat {
@@ -31,9 +30,9 @@ public class Chat {
     @ManyToMany(mappedBy = "chats")
     private Set<User> users = new HashSet<>();
 
-    public Chat(final String title, final Set<User> users, final Date lastMessageDate) {
+    public Chat(final String title, final Set<User> users) {
         this.title = title;
+        this.lastMessageDate = Date.valueOf(LocalDate.now());
         this.users = users;
-        this.lastMessageDate = lastMessageDate;
     }
 }

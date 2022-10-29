@@ -5,9 +5,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
-import pl.kmp.be.api.messages.entity.UiMessage;
+import pl.kmp.be.api.chats.entity.UiMessage;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -21,10 +22,11 @@ public class Message {
     private Date messageDate;
     private Long chatId;
 
-    public Message(UiMessage message) {
+    public Message(final UiMessage message, final Long chatId) {
         this.id = message.getId();
         this.text = message.getText();
         this.author = message.getAuthor();
-        this.messageDate = message.getMessageDate();
+        this.messageDate = Date.valueOf(LocalDate.now());
+        this.chatId = chatId;
     }
 }
