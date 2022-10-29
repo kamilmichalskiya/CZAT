@@ -8,8 +8,12 @@ spring:
     password: postgres
   data:
     mongodb:
-      uri: mongodb://root:root@localhost:27017/czat
+      authentication-database: admin
+      username: root
+      password: root
       database: czat
+      port: 27017
+      host: localhost
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     open-in-view: false

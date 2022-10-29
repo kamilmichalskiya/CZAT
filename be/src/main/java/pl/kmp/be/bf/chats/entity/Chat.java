@@ -26,11 +26,8 @@ public class Chat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String title;
-
     private Date lastMessageDate;
-
     @ManyToMany(mappedBy = "chats")
     private Set<User> users = new HashSet<>();
 
