@@ -36,7 +36,7 @@ export const IconStyleWrapper = styled.div`
     color: ${({ theme }) => theme.colors.white};
   }
   &:hover {
-    opacity: 0.9;
+    opacity: 0.8;
     cursor: pointer;
   }
 `;
@@ -78,9 +78,10 @@ export const LeftPanel = styled.div`
 export const SearchBarWrapper = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   font-size: 0.8em;
   padding: 0 10px;
-  margin: 5px 0;
+  margin: 5px 0 10px;
   border-bottom: 1px solid ${({ theme }) => theme.colors.grey};
 
   input {
@@ -94,6 +95,27 @@ export const SearchBarWrapper = styled.div`
       outline: none;
     }
   }
+`;
+
+export const SecondaryButton = styled.button`
+  max-width: 320px;
+  background-color: ${({ theme }) => theme.colors.grey};
+  font-size: ${({ theme }) => theme.fontSize.s};
+  padding: 5px 15px;
+  color: ${({ theme }) => theme.colors.lightGrey};
+  border-radius: 50px;
+  font-weight: bold;
+  transition: opacity 0.5s;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.white};
+    background-color: ${({ theme }) => theme.colors.lightGrey};
+    transition: 0.3s;
+  }
+
+  /* @media ${({ theme }) => theme.breakpoints.sm} {
+    margin-bottom: 90px;
+  } */
 `;
 
 export const ListElementWrapper = styled.div`

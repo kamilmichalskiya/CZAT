@@ -4,6 +4,7 @@ import {
   ChatHeader,
   LeftPanel,
   SearchBarWrapper,
+  SecondaryButton,
   IconStyleWrapper,
   InactiveIconStyleWrapper,
   GreenIconStyleWrapper,
@@ -35,12 +36,14 @@ const Chat: React.FC = () => {
           <LogOut size="32" />
         </IconStyleWrapper>
       </ChatHeader>
+
       <LeftPanel>
         <SearchBarWrapper>
           <InactiveIconStyleWrapper>
             <MagnifyingGlass size="20" />
           </InactiveIconStyleWrapper>
-          <input placeholder="Szukaj"></input>
+          <input placeholder="Znajdź rozmówcę"></input>
+          <SecondaryButton>Szukaj</SecondaryButton>
         </SearchBarWrapper>
         <ListElementWrapper>
           <ListElementPhoto>{Array.from('Nickname123')[0]}</ListElementPhoto>
@@ -93,6 +96,7 @@ const Chat: React.FC = () => {
           </ListElementContainer>
         </ListElementWrapper>
       </LeftPanel>
+
       <RightPanel>
         <RightPanelHeader>
           <ListElementWrapper>
