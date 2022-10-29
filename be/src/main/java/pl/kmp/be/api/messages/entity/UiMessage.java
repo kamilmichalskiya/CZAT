@@ -11,7 +11,7 @@ import java.sql.Date;
 @Setter
 @NoArgsConstructor
 public class UiMessage {
-    private Long id;
+    private String id;
     private String text;
     private Long author;
     private Date messageDate;

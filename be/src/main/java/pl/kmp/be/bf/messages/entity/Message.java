@@ -4,9 +4,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 import pl.kmp.be.api.messages.entity.UiMessage;
 
-import javax.persistence.Id;
 import java.sql.Date;
 
 @Getter
@@ -14,8 +14,8 @@ import java.sql.Date;
 @NoArgsConstructor
 @Document("messages")
 public class Message {
-    @Id
-    private Long id;
+    @MongoId
+    private String id;
     private String text;
     private Long author;
     private Date messageDate;
