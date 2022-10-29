@@ -118,17 +118,6 @@ export const SecondaryButton = styled.button`
   } */
 `;
 
-export const ListElementWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 10px 15px;
-  margin-bottom: 10px;
-  background-color: ${({ theme }) => theme.colors.grey};
-  width: 100%;
-  height: 4em;
-  border-radius: 10px;
-`;
-
 export const ListElementPhoto = styled.div`
   display: flex;
   justify-content: center;
@@ -138,8 +127,8 @@ export const ListElementPhoto = styled.div`
   border-radius: 50px;
   font-size: 2em;
   font-weight: bold;
-  color: ${({ theme }) => theme.colors.white};
-  background-color: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.grey};
+  background-color: ${({ theme }) => theme.colors.white};
 `;
 
 export const ListElementContainer = styled.div`
@@ -165,6 +154,31 @@ export const ListElementUsername = styled.div`
   font-size: ${({ theme }) => theme.fontSize.m};
 `;
 
+export const ListElementWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  background-color: ${({ theme }) => theme.colors.grey};
+  width: 100%;
+  height: 4em;
+  border-radius: 10px;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.primary};
+    transition: 0.3s;
+    cursor: pointer;
+
+    span {
+      color: ${({ theme }) => theme.colors.grey};
+    }
+  }
+
+  &:hover ${ListElementUsername} {
+    color: ${({ theme }) => theme.colors.grey};
+  }
+`;
+
 export const RightPanel = styled.div`
   grid-area: 2 / 2 / 3 / 3;
   background-color: ${({ theme }) => theme.colors.grey};
@@ -178,7 +192,19 @@ export const RightPanelHeader = styled.div`
   align-items: center;
   height: 5em;
   padding: 10px 10px 0;
+  &:hover ${ListElementWrapper} {
+    background-color: ${({ theme }) => theme.colors.grey};
+    cursor: default;
+
+    span {
+      color: ${({ theme }) => theme.colors.lightGrey};
+    }
+    ${ListElementUsername} {
+      color: ${({ theme }) => theme.colors.white};
+    }
+  }
 `;
+// TODO: działa, ale zrefactoryzować żeby nie zerować hover tylko nadawać
 
 export const RightPanelContent = styled.div`
   flex-grow: 1;
