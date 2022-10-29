@@ -1,9 +1,9 @@
 package pl.kmp.be.bm.users.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pl.kmp.be.api.users.entity.UiUser;
 import pl.kmp.be.bm.chats.entity.Chat;
 
 import javax.persistence.Entity;
@@ -20,7 +20,6 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "users")
 public class User {
@@ -34,12 +33,12 @@ public class User {
                inverseJoinColumns = @JoinColumn(name = "chat_id"))
     private Set<Chat> chats = new HashSet<>();
 
-    public void addChat(final Chat chat) {
-        chats.add(chat);
+    public User(final UiUser user) {
+        this.username = user.getLogin();
+        this.password = user.getPassword();
     }
 
-    public User(final String username, final String password) {
-        this.username = username;
-        this.password = password;
+    public void addChat(final Chat chat) {
+        chats.add(chat);
     }
 }

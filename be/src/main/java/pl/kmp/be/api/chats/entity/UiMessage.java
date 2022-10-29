@@ -1,4 +1,4 @@
-package pl.kmp.be.api.messages.entity;
+package pl.kmp.be.api.chats.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,11 +16,10 @@ public class UiMessage {
     private Long author;
     private Date messageDate;
 
-    public UiMessage(Message save) {
-        id = save.getId();
-        text = save.getText();
-        author = save.getAuthor();
-        messageDate = save.getMessageDate();
+    public UiMessage(final Message message) {
+        this.id = message.getId();
+        this.text = message.getText();
+        this.author = message.getAuthor();
+        this.messageDate = message.getMessageDate();
     }
-
 }
