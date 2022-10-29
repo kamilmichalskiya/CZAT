@@ -1,13 +1,13 @@
-package pl.kmp.be.bf.chats.boundary;
+package pl.kmp.be.bm.chats.boundary;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.kmp.be.api.chats.entity.UiChat;
 import pl.kmp.be.api.users.entity.UiUser;
-import pl.kmp.be.bf.chats.control.ChatsRepository;
-import pl.kmp.be.bf.chats.entity.Chat;
-import pl.kmp.be.bf.users.control.UsersRepository;
-import pl.kmp.be.bf.users.entity.User;
+import pl.kmp.be.bm.chats.control.ChatsRepository;
+import pl.kmp.be.bm.chats.entity.Chat;
+import pl.kmp.be.bm.users.control.UsersRepository;
+import pl.kmp.be.bm.users.entity.User;
 
 import javax.transaction.Transactional;
 import java.sql.Date;

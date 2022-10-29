@@ -3,7 +3,7 @@ package pl.kmp.be.api.messages.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import pl.kmp.be.bf.messages.entity.Message;
+import pl.kmp.be.bm.messages.entity.Message;
 
 import java.sql.Date;
 

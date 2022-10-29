@@ -1,4 +1,4 @@
-package pl.kmp.be.bf.messages.entity;
+package pl.kmp.be.bm.messages.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pl.kmp.be.api.users.entity.UiUser;
-import pl.kmp.be.bf.chats.entity.Chat;
+import pl.kmp.be.bm.chats.entity.Chat;
 
 import java.sql.Date;
 import java.util.HashSet;
