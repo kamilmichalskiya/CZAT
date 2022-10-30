@@ -28,6 +28,7 @@ export const theme = {
     l: '16px',
     m: '14px',
     s: '12px',
+    xs: '10px',
   },
   size: size,
   breakpoints: {

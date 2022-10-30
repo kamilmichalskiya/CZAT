@@ -2,22 +2,18 @@ import styled from 'styled-components';
 import { StyledIconBase } from '@styled-icons/styled-icon';
 
 export const ChatWrapper = styled.div`
-  // min-height: 100vh;  <-- nie działa jeśli parent nie ma ustawionej wysokości
-  height: 900px;
-  /* min-width: 100vw; */
+  height: 900px; // min-height: 100vh nie działa jeśli parent nie ma ustawionej wysokości
   max-width: ${({ theme }) => theme.size.xl};
   display: grid;
   grid-template-columns: 0.7fr 1.3fr;
   grid-template-rows: 0.15fr 1.85fr;
-  grid-column-gap: 10px;
-  grid-row-gap: 10px;
-  padding: 10px 10px 25px;
+  grid-column-gap: 5px;
+  grid-row-gap: 5px;
   background-color: ${({ theme }) => theme.colors.secondary};
   color: ${({ theme }) => theme.colors.white};
   box-shadow: 0 6px 5px -5px ${({ theme }) => theme.colors.secondary};
-  margin-left: auto;
-  margin-right: auto;
-
+  margin: 20px 0;
+  border-radius: 20px;
   form {
     width: 100%;
     display: flex;
@@ -25,12 +21,13 @@ export const ChatWrapper = styled.div`
     align-items: center;
     justify-content: center;
   }
-
   @media ${({ theme }) => theme.breakpoints.sm} {
     padding: 10px 10px 25px;
     min-height: unset;
-    border-radius: 20px;
-    margin: 20px;
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
+    margin-left: auto;
+    margin-right: auto;
   }
 `;
 
@@ -45,11 +42,16 @@ export const IconStyleWrapper = styled.div`
 `;
 
 export const InactiveIconStyleWrapper = styled(IconStyleWrapper)`
+  display: none;
   ${StyledIconBase} {
     color: ${({ theme }) => theme.colors.placeholder};
   }
   &:hover {
     cursor: default;
+    opacity: 1;
+  }
+  @media ${({ theme }) => theme.breakpoints.sm} {
+    display: block;
   }
 `;
 
@@ -63,19 +65,23 @@ export const ChatHeader = styled.div`
   grid-area: 1 / 1 / 2 / 3;
   display: flex;
   justify-content: space-between;
-  padding: 20px;
+  align-items: center;
+  padding: 0 20px;
   font-size: ${({ theme }) => theme.fontSize.xxl};
   color: ${({ theme }) => theme.colors.primary};
   text-align: left;
   font-weight: bold;
   border-bottom: 2px solid ${({ theme }) => theme.colors.grey};
+  @media ${({ theme }) => theme.breakpoints.sm} {
+    padding: 20px;
+  }
 `;
 
 export const LeftPanelWrapper = styled.div`
   grid-area: 2 / 1 / 3 / 2;
   border-radius: 10px;
   border: 2px solid ${({ theme }) => theme.colors.grey};
-  padding: 10px;
+  padding: 5px;
   width: 100%;
 `;
 
@@ -84,37 +90,57 @@ export const SearchBarWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   font-size: 0.8em;
-  padding: 0 10px;
-  margin: 5px 0 10px;
   border-bottom: 1px solid ${({ theme }) => theme.colors.grey};
-
+  min-width: 160px;
+  margin: 5px 0;
   input {
-    flex-grow: 1;
-    padding: 10px;
+    width: 60%;
+    padding: 5px;
     font-weight: bold;
     color: ${({ theme }) => theme.colors.white};
     background-color: ${({ theme }) => theme.colors.secondary};
+    font-size: ${({ theme }) => theme.fontSize.s};
     border: none;
     &:focus {
       outline: none;
+    }
+    &::placeholder {
+      font-size: ${({ theme }) => theme.fontSize.xs};
+    }
+  }
+  @media ${({ theme }) => theme.breakpoints.md} {
+    flex-direction: row;
+    width: 100%;
+    margin: 5px 0 10px;
+    padding: 0 10px;
+    input {
+      flex-grow: 1;
+      padding: 10px;
+      font-size: ${({ theme }) => theme.fontSize.m};
+      &::placeholder {
+        font-size: ${({ theme }) => theme.fontSize.s};
+      }
     }
   }
 `;
 
 export const SecondaryButton = styled.button`
-  max-width: 320px;
   background-color: ${({ theme }) => theme.colors.grey};
-  font-size: ${({ theme }) => theme.fontSize.s};
-  padding: 5px 15px;
+  font-size: ${({ theme }) => theme.fontSize.xs};
+  padding: 5px 10px;
   color: ${({ theme }) => theme.colors.lightGrey};
   border-radius: 50px;
   font-weight: bold;
   transition: opacity 0.5s;
-
   &:hover {
     color: ${({ theme }) => theme.colors.white};
     background-color: ${({ theme }) => theme.colors.lightGrey};
     transition: 0.3s;
+  }
+  @media ${({ theme }) => theme.breakpoints.md} {
+    padding: 5px 15px;
+    max-width: 320px;
+    font-size: ${({ theme }) => theme.fontSize.s};
   }
 `;
 
@@ -139,13 +165,20 @@ export const ListElementContainer = styled.div`
   flex-grow: 1;
   height: 100%;
   padding: 4px 0;
-  font-size: ${({ theme }) => theme.fontSize.s};
+  font-size: ${({ theme }) => theme.fontSize.xs};
   color: ${({ theme }) => theme.colors.lightGrey};
+  @media ${({ theme }) => theme.breakpoints.md} {
+    justify-content: space-around;
+  }
 `;
 
 export const ListElementUpperRow = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
+  @media ${({ theme }) => theme.breakpoints.sm} {
+    flex-direction: row;
+  }
 `;
 
 export const ListElementUsername = styled.div`
@@ -158,24 +191,42 @@ export const ListElementWrapper = styled.div`
   display: flex;
   align-items: center;
   padding: 10px 15px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   background-color: ${({ theme }) => theme.colors.grey};
-  min-width: 50px;
+  min-width: 160px;
   height: 4em;
   border-radius: 10px;
-
+  ${ListElementPhoto} {
+    display: none;
+  }
+  ${ListElementContainer} {
+    margin-left: 0;
+  }
   &:hover {
     background-color: ${({ theme }) => theme.colors.primary};
     transition: 0.3s;
     cursor: pointer;
-
     span {
       color: ${({ theme }) => theme.colors.grey};
     }
+    ${ListElementUsername} {
+      color: ${({ theme }) => theme.colors.grey};
+    }
   }
-
-  &:hover ${ListElementUsername} {
-    color: ${({ theme }) => theme.colors.grey};
+  @media ${({ theme }) => theme.breakpoints.sm} {
+    margin-bottom: 5px;
+  }
+  @media ${({ theme }) => theme.breakpoints.md} {
+    width: 100%;
+    min-width: 240px;
+    ${ListElementPhoto} {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    ${ListElementContainer} {
+      margin-left: 15px;
+    }
   }
 `;
 
@@ -200,7 +251,6 @@ export const RightPanelHeaderContent = styled.div`
   align-items: center;
   padding: 10px 15px;
   margin-bottom: 10px;
-  background-color: ${({ theme }) => theme.colors.grey};
   height: 4em;
 `;
 
@@ -215,7 +265,6 @@ export const RightPanelBottomWrapper = styled.div`
   display: flex;
   align-items: center;
   padding: 0 20px;
-
   input {
     flex-grow: 1;
     padding: 10px;
