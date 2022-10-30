@@ -12,8 +12,6 @@ export const ChatWrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.secondary};
   color: ${({ theme }) => theme.colors.white};
   box-shadow: 0 6px 5px -5px ${({ theme }) => theme.colors.secondary};
-  margin: 20px 0;
-  border-radius: 20px;
   form {
     width: 100%;
     display: flex;
@@ -28,6 +26,10 @@ export const ChatWrapper = styled.div`
     grid-row-gap: 10px;
     margin-left: auto;
     margin-right: auto;
+    border-radius: 20px;
+  }
+  @media ${({ theme }) => theme.breakpoints.xl} {
+    margin-top: 10px;
   }
 `;
 
