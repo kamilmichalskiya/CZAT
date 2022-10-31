@@ -2,8 +2,10 @@ import { useEffect } from 'react';
 import {
   ChatWrapper,
   ChatHeader,
-  LeftPanel,
+  LeftPanelWrapper,
   SearchBarWrapper,
+  SecondaryButton,
+  IconStyleWrapper,
   InactiveIconStyleWrapper,
   GreenIconStyleWrapper,
   ListElementWrapper,
@@ -11,14 +13,16 @@ import {
   ListElementContainer,
   ListElementUpperRow,
   ListElementUsername,
-  RightPanel,
+  RightPanelWrapper,
   RightPanelHeader,
-  RightPanelContent,
+  RightPanelHeaderContent,
+  RightPanelConversation,
   RightPanelBottomWrapper,
 } from './Chat-styled';
 import { toast } from 'react-toastify';
 import { MagnifyingGlass } from '@styled-icons/entypo/MagnifyingGlass';
 import { Send } from '@styled-icons/boxicons-solid/Send';
+import { LogOut } from '@styled-icons/entypo/LogOut';
 
 const Chat: React.FC = () => {
   useEffect(() => {
@@ -27,13 +31,20 @@ const Chat: React.FC = () => {
 
   return (
     <ChatWrapper>
-      <ChatHeader>CZAT</ChatHeader>
-      <LeftPanel>
+      <ChatHeader>
+        <span>CZAT</span>
+        <IconStyleWrapper>
+          <LogOut size="32" />
+        </IconStyleWrapper>
+      </ChatHeader>
+
+      <LeftPanelWrapper>
         <SearchBarWrapper>
           <InactiveIconStyleWrapper>
             <MagnifyingGlass size="20" />
           </InactiveIconStyleWrapper>
-          <input placeholder="Szukaj"></input>
+          <input placeholder="Znajdź rozmówcę"></input>
+          <SecondaryButton>Szukaj</SecondaryButton>
         </SearchBarWrapper>
         <ListElementWrapper>
           <ListElementPhoto>{Array.from('Nickname123')[0]}</ListElementPhoto>
@@ -85,10 +96,11 @@ const Chat: React.FC = () => {
             <span>Lorem ipsum dolor sit amet</span>
           </ListElementContainer>
         </ListElementWrapper>
-      </LeftPanel>
-      <RightPanel>
+      </LeftPanelWrapper>
+
+      <RightPanelWrapper>
         <RightPanelHeader>
-          <ListElementWrapper>
+          <RightPanelHeaderContent>
             <ListElementPhoto>{Array.from('Nickname123')[0]}</ListElementPhoto>
             <ListElementContainer>
               <ListElementUpperRow>
@@ -96,16 +108,16 @@ const Chat: React.FC = () => {
               </ListElementUpperRow>
               <span>1h ago</span>
             </ListElementContainer>
-          </ListElementWrapper>
+          </RightPanelHeaderContent>
         </RightPanelHeader>
-        <RightPanelContent></RightPanelContent>
+        <RightPanelConversation></RightPanelConversation>
         <RightPanelBottomWrapper>
           <input placeholder="Wpisz wiadomość"></input>
           <GreenIconStyleWrapper>
-            <Send size="36" />
+            <Send size="26" />
           </GreenIconStyleWrapper>
         </RightPanelBottomWrapper>
-      </RightPanel>
+      </RightPanelWrapper>
     </ChatWrapper>
   );
 };
