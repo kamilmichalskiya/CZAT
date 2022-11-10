@@ -31,7 +31,7 @@ public class ChatsBF {
     @Transactional
     public UiChat createChat(final UiChat chat) {
         final String username = UsersBF.getLoggedUser().orElse("");
-        final List<String> usernames = chat.getUsers().stream().map(UiUser::getLogin).collect(Collectors.toList());
+        final List<String> usernames = chat.getUsers().stream().map(UiUser::getUsername).collect(Collectors.toList());
         usernames.add(username);
         final Set<User> users = usersRepository.findAllByUsernameIn(usernames);
         final Chat savedChat = repository.save(new Chat(chat.getTitle(), users));
@@ -45,7 +45,7 @@ public class ChatsBF {
     }
 
     public Optional<UiChat> findChatByUsernames(final UiChat chat) {
-        final List<String> usernames = chat.getUsers().stream().map(UiUser::getLogin).collect(Collectors.toList());
+        final List<String> usernames = chat.getUsers().stream().map(UiUser::getUsername).collect(Collectors.toList());
         final String username = UsersBF.getLoggedUser().orElse("");
         usernames.add(username);
         return repository.findByUsernames(usernames, usernames.size()).map(UiChat::new).map(uiChat -> {
@@ -79,7 +79,7 @@ public class ChatsBF {
     private void setChatTitle(String username, UiChat uiChat) {
         uiChat.setTitle(uiChat.getUsers()
                 .stream()
-                .map(UiUser::getLogin)
+                .map(UiUser::getUsername)
                 .filter(login -> !login.equals(username))
                 .findFirst()
                 .orElse(""));

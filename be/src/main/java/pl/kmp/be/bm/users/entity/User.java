@@ -33,9 +33,9 @@ public class User implements UserDetails {
                inverseJoinColumns = @JoinColumn(name = "chat_id"))
     private Set<Chat> chats = new HashSet<>();
 
-    public User(final UiUser user) {
-        this.username = user.getLogin();
-        this.password = user.getPassword();
+    public User(final String username, final String password) {
+        this.username = username;
+        this.password = password;
     }
 
     public void addChat(final Chat chat) {
