@@ -7,8 +7,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 import pl.kmp.be.api.chats.entity.UiMessage;
 
-import java.sql.Date;
-import java.time.LocalDate;
+import java.time.Instant;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -25,7 +25,7 @@ public class Message {
     public Message(final UiMessage message, final String author, final Long chatId) {
         this.text = message.getText();
         this.author = author;
-        this.messageDate = message.getMessageDate() != null ? message.getMessageDate() : Date.valueOf(LocalDate.now());
+        this.messageDate = message.getMessageDate() != null ? message.getMessageDate() : Date.from(Instant.now());
         this.chatId = chatId;
     }
 }
