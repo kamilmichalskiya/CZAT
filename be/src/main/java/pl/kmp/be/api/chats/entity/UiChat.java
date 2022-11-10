@@ -1,13 +1,13 @@
 package pl.kmp.be.api.chats.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 import pl.kmp.be.api.users.entity.UiUser;
 import pl.kmp.be.bm.chats.entity.Chat;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class UiChat {
     private Long id;
     private String title;
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
     private Date lastMessageDate;
     private Set<UiUser> users = new HashSet<>();
     private Set<UiMessage> messages = new HashSet<>();
