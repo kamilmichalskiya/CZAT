@@ -45,8 +45,8 @@ public class LinksController {
         return ResponseEntity.ok(Arrays.asList(linkTo(LinksController.class).slash("logout").withRel(LOGOUT.toString()),
                 linkTo(methodOn(ChatsController.class).getAllChats()).withRel(GET_ALL_CHATS.toString()),
                 linkTo(methodOn(ChatsController.class).writeTo(null)).withRel(WRITE_TO_CHAT.toString()),
-                linkTo(wsUrl).slash(username + "/chats").withRel(WS_CHATS.toString()),
-                linkTo(wsUrl).slash(username + "/messages").withRel(WS_MESSAGES.toString()),
+                Link.of(String.format("%s/%s/chats", wsUrl, username)).withRel(WS_CHATS.toString()),
+                Link.of(String.format("%s/%s/messages", wsUrl, username)).withRel(WS_MESSAGES.toString()),
                 linkTo(methodOn(LinksController.class).getMainLinks()).withRel(MAIN_LINKS.toString())));
         // @formatter:on
     }

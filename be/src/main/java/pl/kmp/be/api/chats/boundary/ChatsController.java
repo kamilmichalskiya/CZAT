@@ -24,7 +24,7 @@ import static pl.kmp.be.api.LinkRelations.SEND_MESSAGE;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(name = "/api/chats", produces = "application/hal+json")
+@RequestMapping(value = "/api/chats", produces = "application/hal+json")
 public class ChatsController {
     private final ChatsBF chatsBF;
     private final MessagesBF messagesBF;
