@@ -4,7 +4,8 @@ import lombok.Getter;
 
 @Getter
 public enum LinkRelations {
-    GET_MAIN_LINKS,
+    MAIN_LINKS,
+    ADVANCED_LINKS,
 
     LOGIN,
     LOGOUT,

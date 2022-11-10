@@ -9,10 +9,10 @@ import pl.kmp.be.bm.users.entity.User;
 @Setter
 @NoArgsConstructor
 public class UiUser {
-    private String login;
+    private String username;
     private String password;
 
     public UiUser(final User user) {
-        this.login = user.getUsername();
+        this.username = user.getUsername();
     }
 }

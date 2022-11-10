@@ -21,6 +21,7 @@ public class UiChat {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
     private Date lastMessageDate;
     private Set<UiUser> users = new HashSet<>();
+    private Set<UiMessage> messages = new HashSet<>();
 
     public UiChat(final Chat chat) {
         this.id = chat.getId();
