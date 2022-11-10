@@ -18,15 +18,14 @@ public class Message {
     @MongoId
     private String id;
     private String text;
-    private Long author;
+    private String author;
     private Date messageDate;
     private Long chatId;
 
-    public Message(final UiMessage message, final Long chatId) {
-        this.id = message.getId();
+    public Message(final UiMessage message, final String author, final Long chatId) {
         this.text = message.getText();
-        this.author = message.getAuthor();
-        this.messageDate = Date.valueOf(LocalDate.now());
+        this.author = author;
+        this.messageDate = message.getMessageDate() != null ? message.getMessageDate() : Date.valueOf(LocalDate.now());
         this.chatId = chatId;
     }
 }
