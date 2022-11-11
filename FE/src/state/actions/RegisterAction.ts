@@ -1,0 +1,17 @@
+import { ActionType } from '../action-types';
+
+interface RegisterUserAction {
+  type: ActionType.REGISTER_USER;
+}
+
+interface RegisterUserSuccessAction {
+  type: ActionType.REGISTER_USER_SUCCESS;
+  payload: { login: string; password: string; loggedIn: boolean };
+}
+
+interface RegisterUserErrorAction {
+  type: ActionType.REGISTER_USER_ERROR;
+  payload: string;
+}
+
+export type RegisterAction = RegisterUserAction | RegisterUserSuccessAction | RegisterUserErrorAction;

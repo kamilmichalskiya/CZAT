@@ -47,14 +47,15 @@ const Login: React.FC = () => {
   // toggle login/register view
   const [isLoginView, setIsLoginView] = useState(true);
 
-  const { loginUser, registerUser } = useActions();
-  const { error, loading } = useTypedSelector((state) => state.userSession);
+  const { loginUser, registerUser, getLinks } = useActions();
+  const { error, loading } = useTypedSelector((state) => state.user);
 
   useEffect(() => {
     const { search: queryParams } = window.location;
     if (queryParams === '?error=true') {
       toast.error('Podane dane logowania są nieprawidłowe. Spróbuj ponownie!', { toastId: 'toast-id-error' });
     }
+    getLinks();
   }, []);
 
   useEffect(() => {

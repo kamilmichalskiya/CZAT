@@ -1,7 +1,40 @@
-import axios from 'axios';
+// import axios from 'axios'; TODO
 import { Dispatch } from 'redux';
 import { ActionType } from '../action-types';
-import { LoginAction, RegisterAction, UsersAction } from '../actions';
+import { LinksAction, LoginAction, RegisterAction } from '../actions';
+
+export const getLinks = () => {
+  return async (dispatch: Dispatch<LinksAction>) => {
+    dispatch({
+      type: ActionType.GET_LINKS,
+    });
+
+    const requestOptions = {
+      method: 'GET',
+    };
+    if (!process.env.REACT_APP_CZAT_API_MAIN_LINK) {
+      dispatch({
+        type: ActionType.GET_LINKS_ERROR,
+        payload: 'Wystąpił problem z żądaniem! Spróbuj ponownie. (Code: GET_LINKS - ENV)',
+      });
+      return;
+    }
+    const { protocol } = window.location;
+    const response = await fetch(`${protocol}//${process.env.REACT_APP_CZAT_API_MAIN_LINK}`, requestOptions);
+    if (!response.ok) {
+      dispatch({
+        type: ActionType.GET_LINKS_ERROR,
+        payload: 'Wystąpił problem z żądaniem! Spróbuj ponownie. (Code: GET_LINKS)',
+      });
+      return;
+    }
+    const data = await response.json();
+    dispatch({
+      type: ActionType.GET_LINKS_SUCCESS,
+      payload: data,
+    });
+  };
+};
 
 export const loginUser = (credentials: any) => {
   return async (dispatch: Dispatch<LoginAction>) => {
@@ -46,8 +79,6 @@ export const registerUser = (credentials: any) => {
       });
       return;
     }
-    // TODO check location override after BE integration
-    // window.location.href = response.url;
     dispatch({
       type: ActionType.REGISTER_USER_SUCCESS,
       payload: { login: credentials.login, password: credentials.password, loggedIn: true },
@@ -55,34 +86,34 @@ export const registerUser = (credentials: any) => {
   };
 };
 
-export const searchUsers = (term: string) => {
-  return async (dispatch: Dispatch<UsersAction>) => {
-    dispatch({
-      type: ActionType.SEARCH_USERS,
-    });
+// export const searchUsers = (term: string) => {
+//   return async (dispatch: Dispatch<UsersAction>) => {
+//     dispatch({
+//       type: ActionType.SEARCH_USERS,
+//     });
 
-    try {
-      const { data } = await axios.get('https://registry.npmjs.org/-/v1/search', {
-        params: {
-          text: term,
-        },
-      });
+//     try {
+//       const { data } = await axios.get('https://registry.npmjs.org/-/v1/search', {
+//         params: {
+//           text: term,
+//         },
+//       });
 
-      const names = data.objects.map((result: any) => {
-        return result.package.name;
-      });
+//       const names = data.objects.map((result: any) => {
+//         return result.package.name;
+//       });
 
-      dispatch({
-        type: ActionType.SEARCH_USERS_SUCCESS,
-        payload: names,
-      });
-    } catch (err) {
-      if (err instanceof Error) {
-        dispatch({
-          type: ActionType.SEARCH_USERS_ERROR,
-          payload: err.message,
-        });
-      }
-    }
-  };
-};
+//       dispatch({
+//         type: ActionType.SEARCH_USERS_SUCCESS,
+//         payload: names,
+//       });
+//     } catch (err) {
+//       if (err instanceof Error) {
+//         dispatch({
+//           type: ActionType.SEARCH_USERS_ERROR,
+//           payload: err.message,
+//         });
+//       }
+//     }
+//   };
+// };
