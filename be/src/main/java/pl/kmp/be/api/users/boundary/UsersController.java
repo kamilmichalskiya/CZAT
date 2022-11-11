@@ -2,6 +2,7 @@ package pl.kmp.be.api.users.boundary;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +12,7 @@ import pl.kmp.be.bm.users.boundary.UsersBF;
 
 @RequiredArgsConstructor
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping(value = "/api/users", produces = "application/hal+json")
 public class UsersController {
     private final UsersBF usersBF;
