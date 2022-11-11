@@ -48,6 +48,7 @@ const Login: React.FC = () => {
 
   const { loginUser, registerUser } = useActions();
   const { error, loading } = useTypedSelector((state) => state.user);
+  const { data } = useTypedSelector((state) => state.links);
 
   useEffect(() => {
     const { search: queryParams } = window.location;
@@ -86,7 +87,7 @@ const Login: React.FC = () => {
       }
     }
 
-    loginUser({ login: formData.login, password: formData.password });
+    loginUser({ login: formData.login, password: formData.password }, data?.LOGIN);
   };
 
   const onRegisterSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
@@ -101,7 +102,7 @@ const Login: React.FC = () => {
       }
     }
 
-    registerUser({ login: formData.login, password: formData.password });
+    registerUser({ login: formData.login, password: formData.password }, data?.REGISTER);
   };
 
   const getValidationErrors = (type: 'login' | 'register' = 'login'): FormData => {

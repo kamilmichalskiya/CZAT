@@ -1,18 +1,34 @@
-export const loginUser = (credentials: any) => {
+// import axios from 'axios'; TODO
+import { Dispatch } from 'redux';
+import { ActionType } from '../../action-types';
+import { LoginAction } from '../../actions';
+
+export const loginUser = (credentials: any, url: string | undefined) => {
   return async (dispatch: Dispatch<LoginAction>) => {
     dispatch({
       type: ActionType.LOGIN_USER,
     });
+    if (typeof url !== 'string') {
+      dispatch({
+        type: ActionType.LOGIN_USER_ERROR,
+        payload: 'Wystąpił problem z żądaniem! Spróbuj ponownie. (CODE: LOGIN_WRONG_LINK)',
+      });
+      return;
+    }
 
     const requestOptions = {
       method: 'POST',
-      body: credentials,
+      // headers: {
+      //   'Content-Type': 'application/json',
+      // },
+      body: JSON.stringify(credentials),
+      headers: new Headers({ 'content-type': 'application/json' }),
     };
-    const response = await fetch('api/login', requestOptions);
+    const response = await fetch(url, requestOptions);
     if (response.status === 403 || response.status !== 301) {
       dispatch({
         type: ActionType.LOGIN_USER_ERROR,
-        payload: 'Wystąpił problem z żądaniem! Spróbuj ponownie.',
+        payload: 'Wystąpił problem z żądaniem! Spróbuj ponownie. (CODE: LOGIN_STATUS)',
       });
       return;
     }

@@ -1,7 +1,7 @@
 // import axios from 'axios'; TODO
 import { Dispatch } from 'redux';
 import { ActionType } from '../../action-types';
-import { LinksAction, LoginAction, RegisterAction } from '../../actions';
+import { LinksAction } from '../../actions';
 
 export const getLinks = () => {
   return async (dispatch: Dispatch<LinksAction>) => {
