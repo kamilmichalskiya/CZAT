@@ -6,7 +6,7 @@ interface GetLinksAction {
 
 interface GetLinksSuccessAction {
   type: ActionType.GET_LINKS_SUCCESS;
-  payload: object[];
+  payload: { rel: string; href: string }[];
 }
 
 interface GetLinksErrorAction {
