@@ -11,11 +11,12 @@ public enum LinkRelations {
     LOGOUT,
     REGISTER,
 
+    WS_QUEUE,
+    WS_CHATS,
+    WS_MESSAGES,
+
     GET_ALL_CHATS,
     GET_CHAT,
     WRITE_TO_CHAT,
-    WS_CHATS,
-
-    SEND_MESSAGE,
-    WS_MESSAGES
+    SEND_MESSAGE
 }

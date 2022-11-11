@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pl.kmp.be.api.LinkUtils;
 import pl.kmp.be.api.chats.entity.UiChat;
 import pl.kmp.be.api.chats.entity.UiMessage;
 import pl.kmp.be.bm.chats.boundary.ChatsBF;
@@ -30,11 +31,12 @@ import static pl.kmp.be.api.LinkRelations.SEND_MESSAGE;
 public class ChatsController {
     private final ChatsBF chatsBF;
     private final MessagesBF messagesBF;
+    private final LinkUtils linkUtils;
 
     @GetMapping
     public ResponseEntity<CollectionModel<EntityModel<UiChat>>> getAllChats() {
-        return ResponseEntity.ok(CollectionModel.of(
-                chatsBF.findAllChats().stream().map(ChatsController::addLinksToChat).collect(Collectors.toList())));
+        return ResponseEntity.ok(
+                CollectionModel.of(chatsBF.findAllChats().stream().map(this::addLinksToChat).collect(Collectors.toList())));
     }
 
     @PostMapping("/write")
@@ -54,9 +56,9 @@ public class ChatsController {
         return ResponseEntity.ok(messagesBF.sendMessage(id, message));
     }
 
-    private static EntityModel<UiChat> addLinksToChat(final UiChat chat) {
+    private EntityModel<UiChat> addLinksToChat(final UiChat chat) {
         return EntityModel.of(chat).add(
-                linkTo(methodOn(ChatsController.class).getChat(chat.getId())).withRel(GET_CHAT.toString())).add(
-                linkTo(methodOn(ChatsController.class).sendMessage(chat.getId(), null)).withRel(SEND_MESSAGE.toString()));
+                linkUtils.createLink(linkTo(methodOn(ChatsController.class).getChat(chat.getId())), GET_CHAT)).add(
+                linkUtils.createLink(linkTo(methodOn(ChatsController.class).sendMessage(chat.getId(), null)), SEND_MESSAGE));
     }
 }
