@@ -22,7 +22,6 @@ import { Lock } from '@styled-icons/fa-solid/Lock';
 import { EyeOutline } from '@styled-icons/evaicons-outline/EyeOutline';
 import { toast } from 'react-toastify';
 import Loader from '../Loader/Loader';
-// import '@fontsource/montserrat';
 
 interface FormData {
   login: string;

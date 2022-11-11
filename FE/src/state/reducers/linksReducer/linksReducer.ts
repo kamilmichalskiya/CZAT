@@ -4,7 +4,7 @@ import { LinksAction } from '../../actions';
 interface LinksState {
   loading: boolean;
   error: string | null;
-  data: linksData | {};
+  data: linksData | null;
 }
 
 interface linksData {
@@ -16,7 +16,7 @@ interface linksData {
 const initialState = {
   loading: false,
   error: null,
-  data: [],
+  data: null,
 };
 
 const initialLinksData = {
@@ -28,7 +28,7 @@ const initialLinksData = {
 const reducer = (state: LinksState = initialState, action: LinksAction): LinksState => {
   switch (action.type) {
     case ActionType.GET_LINKS:
-      return { loading: true, error: null, data: {} };
+      return { loading: true, error: null, data: null };
     case ActionType.GET_LINKS_SUCCESS:
       const reducedLinks: linksData = initialLinksData;
       action.payload.forEach(({ rel, href }) => {
@@ -36,7 +36,7 @@ const reducer = (state: LinksState = initialState, action: LinksAction): LinksSt
       });
       return { loading: false, error: null, data: reducedLinks };
     case ActionType.GET_LINKS_ERROR:
-      return { loading: false, error: action.payload, data: {} };
+      return { loading: false, error: action.payload, data: null };
     default:
       return state;
   }
