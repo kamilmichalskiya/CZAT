@@ -2,6 +2,7 @@ package pl.kmp.be.api;
 
 import org.springframework.hateoas.Link;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,6 +27,7 @@ import static pl.kmp.be.api.LinkRelations.WS_CHATS;
 import static pl.kmp.be.api.LinkRelations.WS_MESSAGES;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping(value = "/api", produces = "application/hal+json")
 public class LinksController {
     @GetMapping

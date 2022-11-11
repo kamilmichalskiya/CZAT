@@ -1,18 +1,5 @@
 version: "3.8"
 services:
-  mongo:
-    image: mongo:4.4
-    container_name: mongo
-    restart: unless-stopped
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: root
-    depends_on:
-      - postgres
-    ports:
-      - "27017:27017"
-    volumes:
-      - ./mongodb/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
   postgres:
     image: postgres
     restart: unless-stopped
@@ -23,6 +10,17 @@ services:
       POSTGRES_DB: czat
     ports:
       - "5432:5432"
+  mongo:
+    image: mongo:4.4
+    container_name: mongo
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mongodb/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
   backend:
     build: ./be
     container_name: backend
@@ -30,6 +28,7 @@ services:
     environment:
       SPRING_DATA_MONGODB_HOST: mongo
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/czat
+      SERVER_PORT: 8080
     depends_on:
       - mongo
       - postgres
@@ -39,6 +38,8 @@ services:
     build: ./fe
     container_name: frontend
     restart: unless-stopped
+    environment:
+      REACT_APP_CZAT_API_MAIN_LINK: https://backend:8080/api
     ports:
       - "80:3000"
     depends_on:
