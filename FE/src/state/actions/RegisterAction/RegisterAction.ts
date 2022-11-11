@@ -1,4 +1,4 @@
-import { ActionType } from '../action-types';
+import { ActionType } from '../../action-types';
 
 interface RegisterUserAction {
   type: ActionType.REGISTER_USER;

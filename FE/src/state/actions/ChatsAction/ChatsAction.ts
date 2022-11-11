@@ -1,4 +1,4 @@
-import { ActionType } from '../action-types';
+import { ActionType } from '../../action-types';
 
 interface GetAllChatsAction {
   type: ActionType.GET_ALL_CHATS;

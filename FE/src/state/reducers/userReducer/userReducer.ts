@@ -1,5 +1,5 @@
-import { ActionType } from '../action-types';
-import { LoginAction } from '../actions';
+import { ActionType } from '../../action-types';
+import { LoginAction } from '../../actions';
 
 interface LoginState {
   loading: boolean;

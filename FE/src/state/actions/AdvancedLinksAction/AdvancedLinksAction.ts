@@ -1,4 +1,4 @@
-import { ActionType } from '../action-types';
+import { ActionType } from '../../action-types';
 
 interface GetAdvancedLinksAction {
   type: ActionType.LOGIN_USER;

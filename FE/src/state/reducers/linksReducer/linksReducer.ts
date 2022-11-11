@@ -1,5 +1,5 @@
-import { ActionType } from '../action-types';
-import { LinksAction } from '../actions';
+import { ActionType } from '../../action-types';
+import { LinksAction } from '../../actions';
 
 interface LinksState {
   loading: boolean;

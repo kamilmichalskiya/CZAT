@@ -1,4 +1,4 @@
-import { ActionType } from '../action-types';
+import { ActionType } from '../../action-types';
 
 interface GetLinksAction {
   type: ActionType.GET_LINKS;

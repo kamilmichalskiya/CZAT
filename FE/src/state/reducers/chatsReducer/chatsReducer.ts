@@ -1,5 +1,5 @@
-import { ActionType } from '../action-types';
-import { ChatsAction } from '../actions';
+import { ActionType } from '../../action-types';
+import { ChatsAction } from '../../actions';
 
 interface UsersState {
   loading: boolean;
