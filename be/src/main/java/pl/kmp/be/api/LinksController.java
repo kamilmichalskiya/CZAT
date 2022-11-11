@@ -1,15 +1,14 @@
 package pl.kmp.be.api;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.hateoas.Link;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import pl.kmp.be.api.chats.boundary.ChatsController;
 import pl.kmp.be.api.users.boundary.UsersController;
-import pl.kmp.be.bm.users.boundary.UsersBF;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,30 +25,28 @@ import static pl.kmp.be.api.LinkRelations.WRITE_TO_CHAT;
 import static pl.kmp.be.api.LinkRelations.WS_CHATS;
 import static pl.kmp.be.api.LinkRelations.WS_MESSAGES;
 
+@RequiredArgsConstructor
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping(value = "/api", produces = "application/hal+json")
 public class LinksController {
+
+    private final LinkUtils linkUtils;
+
     @GetMapping
     public ResponseEntity<List<Link>> getMainLinks() {
-        // @formatter:off
-        return ResponseEntity.ok(Arrays.asList(linkTo(LinksController.class).slash("login").withRel(LOGIN.toString()),
-                linkTo(methodOn(UsersController.class).register(null)).withRel(REGISTER.toString()),
-                linkTo(methodOn(LinksController.class).getAdvanceLinks()).withRel(ADVANCED_LINKS.toString())));
-        // @formatter:on
+        return ResponseEntity.ok(Arrays.asList(linkUtils.createLink(linkTo(LinksController.class).slash("login"), LOGIN),
+                linkUtils.createLink(linkTo(methodOn(UsersController.class).register(null)), REGISTER),
+                linkUtils.createLink(linkTo(methodOn(LinksController.class).getAdvanceLinks()), ADVANCED_LINKS)));
     }
 
     @GetMapping("/advanced")
     public ResponseEntity<List<Link>> getAdvanceLinks() {
-        final String wsUrl = ServletUriComponentsBuilder.fromCurrentContextPath().scheme("ws").build().toString();
-        final String username = UsersBF.getLoggedUser().orElse("");
-        // @formatter:off
-        return ResponseEntity.ok(Arrays.asList(linkTo(LinksController.class).slash("logout").withRel(LOGOUT.toString()),
-                linkTo(methodOn(ChatsController.class).getAllChats()).withRel(GET_ALL_CHATS.toString()),
-                linkTo(methodOn(ChatsController.class).writeTo(null)).withRel(WRITE_TO_CHAT.toString()),
-                Link.of(String.format("%s/%s/chats", wsUrl, username)).withRel(WS_CHATS.toString()),
-                Link.of(String.format("%s/%s/messages", wsUrl, username)).withRel(WS_MESSAGES.toString()),
-                linkTo(methodOn(LinksController.class).getMainLinks()).withRel(MAIN_LINKS.toString())));
-        // @formatter:on
+        return ResponseEntity.ok(Arrays.asList(linkUtils.createLink(linkTo(LinksController.class).slash("logout"), LOGOUT),
+                linkUtils.createLink(linkTo(methodOn(ChatsController.class).getAllChats()), GET_ALL_CHATS),
+                linkUtils.createLink(linkTo(methodOn(ChatsController.class).writeTo(null)), WRITE_TO_CHAT),
+                linkUtils.createLink(linkTo(methodOn(LinksController.class).getMainLinks()), MAIN_LINKS),
+                linkUtils.createWebsocketLink(), linkUtils.createTopicLink("chats", WS_CHATS),
+                linkUtils.createTopicLink("messages", WS_MESSAGES)));
     }
 }
