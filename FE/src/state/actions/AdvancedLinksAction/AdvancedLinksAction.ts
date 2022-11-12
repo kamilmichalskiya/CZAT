@@ -1,16 +1,16 @@
 import { ActionType } from '../../action-types';
 
 interface GetAdvancedLinksAction {
-  type: ActionType.LOGIN_USER;
+  type: ActionType.GET_ADVANCED_LINKS;
 }
 
 interface GetAdvancedLinksSuccessAction {
-  type: ActionType.LOGIN_USER_SUCCESS;
-  payload: { login: string; password: string; loggedIn: boolean };
+  type: ActionType.GET_ADVANCED_LINKS_SUCCESS;
+  payload: { rel: string; href: string }[];
 }
 
 interface GetAdvancedLinksErrorAction {
-  type: ActionType.LOGIN_USER_ERROR;
+  type: ActionType.GET_ADVANCED_LINKS_ERROR;
   payload: string;
 }
 

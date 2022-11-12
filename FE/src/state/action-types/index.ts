@@ -15,6 +15,10 @@ export enum ActionType {
   REGISTER_USER_SUCCESS = 'register_user_success',
   REGISTER_USER_ERROR = 'register_user_error',
 
+  LOGOUT_USER = 'logout_user',
+  LOGOUT_USER_SUCCESS = 'logout_user_success',
+  LOGOUT_USER_ERROR = 'logout_user_error',
+
   GET_ALL_CHATS = 'get_all_chats',
   GET_ALL_CHATS_SUCCESS = 'get_all_chats_success',
   GET_ALL_CHATS_ERROR = 'get_all_chats_error',

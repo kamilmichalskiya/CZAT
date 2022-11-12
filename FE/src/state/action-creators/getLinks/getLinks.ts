@@ -20,7 +20,9 @@ export const getLinks = () => {
       return;
     }
     const { protocol } = window.location;
-    const response = await fetch(`${protocol}//${process.env.REACT_APP_CZAT_API_MAIN_LINK}`, requestOptions);
+    const isLinkWithProtocol = process.env.REACT_APP_CZAT_API_MAIN_LINK.includes('http');
+    const linksUrl = isLinkWithProtocol ? `${process.env.REACT_APP_CZAT_API_MAIN_LINK}` : `${protocol}//${process.env.REACT_APP_CZAT_API_MAIN_LINK}`;
+    const response = await fetch(linksUrl, requestOptions);
     if (!response.ok) {
       dispatch({
         type: ActionType.GET_LINKS_ERROR,

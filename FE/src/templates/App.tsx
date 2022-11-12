@@ -6,13 +6,13 @@ import Chat from '../components/Chat/Chat';
 
 const App: React.FC = () => {
   const { getLinks } = useActions();
-  const { loggedIn } = useTypedSelector((state) => state.user);
+  const { userData } = useTypedSelector((state) => state.user);
 
   useEffect(() => {
     getLinks();
   }, [getLinks]);
 
-  return <>{loggedIn ? <Chat /> : <Login />}</>;
+  return <>{userData.loggedIn ? <Chat /> : <Login />}</>;
 };
 
 export default App;
