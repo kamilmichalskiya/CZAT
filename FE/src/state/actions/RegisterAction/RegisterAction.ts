@@ -6,7 +6,7 @@ interface RegisterUserAction {
 
 interface RegisterUserSuccessAction {
   type: ActionType.REGISTER_USER_SUCCESS;
-  payload: { login: string; password: string; loggedIn: boolean };
+  payload: { username: string; password: string; loggedIn: boolean };
 }
 
 interface RegisterUserErrorAction {

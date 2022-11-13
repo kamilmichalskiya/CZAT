@@ -18,9 +18,6 @@ export const loginUser = (credentials: any, url: string | undefined) => {
 
     const requestOptions = {
       method: 'POST',
-      // headers: {
-      //   'Content-Type': 'application/json',
-      // },
       body: JSON.stringify(credentials),
       headers: new Headers({ 'content-type': 'application/json' }),
     };
@@ -34,7 +31,7 @@ export const loginUser = (credentials: any, url: string | undefined) => {
     }
     dispatch({
       type: ActionType.LOGIN_USER_SUCCESS,
-      payload: { login: credentials.login, password: credentials.password, loggedIn: true },
+      payload: { username: credentials.username, password: credentials.password, loggedIn: true },
     });
   };
 };

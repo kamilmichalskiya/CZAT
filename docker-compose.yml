@@ -29,7 +29,6 @@ services:
       SPRING_DATA_MONGODB_HOST: mongo
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/czat
       SERVER_PORT: 8080
-      APP_HOST: backend
     depends_on:
       - mongo
       - postgres

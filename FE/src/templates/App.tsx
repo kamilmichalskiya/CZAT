@@ -5,12 +5,20 @@ import Login from '../components/Login/Login';
 import Chat from '../components/Chat/Chat';
 
 const App: React.FC = () => {
-  const { getLinks } = useActions();
+  const { getLinks, getAdvancedLinks } = useActions();
   const { userData } = useTypedSelector((state) => state.user);
+  const { data: linksData } = useTypedSelector((state) => state.links);
 
   useEffect(() => {
     getLinks();
-  }, [getLinks]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (userData.loggedIn) {
+      getAdvancedLinks(linksData?.ADVANCED_LINKS);
+    }
+  }, [getAdvancedLinks, linksData?.ADVANCED_LINKS, userData.loggedIn]);
 
   return <>{userData.loggedIn ? <Chat /> : <Login />}</>;
 };

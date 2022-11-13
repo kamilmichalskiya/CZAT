@@ -3,7 +3,12 @@ import { Dispatch } from 'redux';
 import { ActionType } from '../../action-types';
 import { RegisterAction } from '../../actions';
 
-export const registerUser = (credentials: any, url: string | undefined) => {
+interface registerCredencials {
+  username: string;
+  password: string;
+}
+
+export const registerUser = (credentials: registerCredencials, url: string | undefined) => {
   return async (dispatch: Dispatch<RegisterAction>) => {
     dispatch({
       type: ActionType.REGISTER_USER,
@@ -22,7 +27,7 @@ export const registerUser = (credentials: any, url: string | undefined) => {
       headers: new Headers({ 'content-type': 'application/json' }),
     };
     const response = await fetch(url, requestOptions);
-    if (response.status !== 301) {
+    if (response.status !== 301 && response.status !== 200) {
       dispatch({
         type: ActionType.REGISTER_USER_ERROR,
         payload: 'Wystąpił problem z żądaniem! Spróbuj ponownie.',
@@ -31,7 +36,7 @@ export const registerUser = (credentials: any, url: string | undefined) => {
     }
     dispatch({
       type: ActionType.REGISTER_USER_SUCCESS,
-      payload: { login: credentials.login, password: credentials.password, loggedIn: true },
+      payload: { username: credentials.username, password: credentials.password, loggedIn: true },
     });
   };
 };
