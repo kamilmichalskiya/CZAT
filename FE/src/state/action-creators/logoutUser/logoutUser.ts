@@ -3,7 +3,7 @@ import { Dispatch } from 'redux';
 import { ActionType } from '../../action-types';
 import { LogoutAction } from '../../actions';
 
-export const loginUser = (url?: string) => {
+export const logoutUser = (url?: string) => {
   return async (dispatch: Dispatch<LogoutAction>) => {
     dispatch({
       type: ActionType.LOGOUT_USER,
@@ -17,16 +17,16 @@ export const loginUser = (url?: string) => {
     }
 
     const response = await fetch(url);
-    if (response.status === 403 || response.status !== 301) {
+    if (response.status === 403 || (response.status !== 301 && response.status !== 200)) {
       dispatch({
         type: ActionType.LOGOUT_USER_ERROR,
-        payload: 'Wystąpił problem z żądaniem! Spróbuj ponownie. (CODE: LOGIN_STATUS)',
+        payload: 'Wystąpił problem z żądaniem! Spróbuj ponownie. (CODE: LOGOUT_STATUS)',
       });
       return;
     }
     dispatch({
       type: ActionType.LOGOUT_USER_SUCCESS,
-      payload: { loggedIn: false },
+      payload: { username: '', password: '', isLoggedIn: false, isRegistered: false },
     });
   };
 };

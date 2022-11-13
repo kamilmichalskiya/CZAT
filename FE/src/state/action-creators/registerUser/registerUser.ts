@@ -8,7 +8,7 @@ interface registerCredencials {
   password: string;
 }
 
-export const registerUser = (credentials: registerCredencials, url: string | undefined) => {
+export const registerUser = (credentials: registerCredencials, url?: string) => {
   return async (dispatch: Dispatch<RegisterAction>) => {
     dispatch({
       type: ActionType.REGISTER_USER,
@@ -30,13 +30,13 @@ export const registerUser = (credentials: registerCredencials, url: string | und
     if (response.status !== 301 && response.status !== 200) {
       dispatch({
         type: ActionType.REGISTER_USER_ERROR,
-        payload: 'Wystąpił problem z żądaniem! Spróbuj ponownie.',
+        payload: 'Wystąpił problem z żądaniem! Spróbuj ponownie. (Code: REGISTER_WRONG_STATUS)',
       });
       return;
     }
     dispatch({
       type: ActionType.REGISTER_USER_SUCCESS,
-      payload: { username: credentials.username, password: credentials.password, loggedIn: true },
+      payload: { username: credentials.username, password: credentials.password, isRegistered: true, isLoggedIn: false },
     });
   };
 };

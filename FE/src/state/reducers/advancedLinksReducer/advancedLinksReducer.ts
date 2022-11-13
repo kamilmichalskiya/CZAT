@@ -1,5 +1,5 @@
 import { ActionType } from '../../action-types';
-import { LinksAction } from '../../actions';
+import { AdvancedLinksAction } from '../../actions';
 
 interface LinksState {
   loading: boolean;
@@ -33,17 +33,17 @@ const initialLinksData = {
   MAIN_LINKS: '',
 };
 
-const reducer = (state: LinksState = initialState, action: LinksAction): LinksState => {
+const reducer = (state: LinksState = initialState, action: AdvancedLinksAction): LinksState => {
   switch (action.type) {
-    case ActionType.GET_LINKS:
+    case ActionType.GET_ADVANCED_LINKS:
       return { loading: true, error: null, data: null };
-    case ActionType.GET_LINKS_SUCCESS:
+    case ActionType.GET_ADVANCED_LINKS_SUCCESS:
       const reducedAdvancedLinks: AdvancedLinksData = initialLinksData;
       action.payload.forEach(({ rel, href }) => {
         reducedAdvancedLinks[rel as keyof AdvancedLinksData] = href;
       });
       return { loading: false, error: null, data: reducedAdvancedLinks };
-    case ActionType.GET_LINKS_ERROR:
+    case ActionType.GET_ADVANCED_LINKS_ERROR:
       return { loading: false, error: action.payload, data: null };
     default:
       return state;

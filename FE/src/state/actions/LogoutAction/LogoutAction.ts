@@ -6,7 +6,7 @@ interface LogoutUserAction {
 
 interface LogoutUserSuccessAction {
   type: ActionType.LOGOUT_USER_SUCCESS;
-  payload: { loggedIn: boolean };
+  payload: { username: string; password: string; isLoggedIn: boolean; isRegistered: boolean };
 }
 
 interface LogoutUserErrorAction {

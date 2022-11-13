@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { useActions } from '../../hooks/useActions';
 import {
@@ -22,6 +22,7 @@ import { Lock } from '@styled-icons/fa-solid/Lock';
 import { EyeOutline } from '@styled-icons/evaicons-outline/EyeOutline';
 import { toast } from 'react-toastify';
 import Loader from '../Loader/Loader';
+import { getAdvancedLinks } from '../../state/action-creators';
 
 interface FormData {
   username: string;
@@ -43,12 +44,12 @@ const Login: React.FC = () => {
   const [formErrors, setFormErrors] = useState<FormData>(initialFormData);
   const [passwordShown, setPasswordShown] = useState(false);
   const [passwordConfirmShown, setPasswordConfirmShown] = useState(false);
-  // toggle login/register view
   const [isLoginView, setIsLoginView] = useState(true);
-
-  const { loginUser, registerUser } = useActions();
-  const { error, loading } = useTypedSelector((state) => state.user);
-  const { data } = useTypedSelector((state) => state.links);
+  const formFieldEventData = useRef<globalThis.FormData | null>(null); // Saved FormData state from register action
+  // TODO create custom useRegisterUser hook
+  const { loginUser, registerUser, getAdvancedLinks } = useActions();
+  const { error, loading, userData } = useTypedSelector((state) => state.user);
+  const { data: linksData } = useTypedSelector((state) => state.links);
 
   useEffect(() => {
     const { search: queryParams } = window.location;
@@ -89,7 +90,8 @@ const Login: React.FC = () => {
 
     if (event.target) {
       const loginRequestBody = new FormData(event.target as HTMLFormElement);
-      loginUser(loginRequestBody, data?.LOGIN);
+      loginUser(loginRequestBody, linksData?.LOGIN);
+      getAdvancedLinks(linksData?.ADVANCED_LINKS);
     }
   };
 
@@ -105,7 +107,12 @@ const Login: React.FC = () => {
       }
     }
 
-    registerUser({ username: formData.username, password: formData.password }, data?.REGISTER);
+    if (event.target) {
+      const loginRequestBody = new FormData(event.target as HTMLFormElement);
+      loginRequestBody.delete('confirmPassword');
+      formFieldEventData.current = loginRequestBody;
+      registerUser({ username: formData.username, password: formData.password }, linksData?.REGISTER);
+    }
   };
 
   const getValidationErrors = (type: 'login' | 'register' = 'login'): FormData => {
@@ -138,6 +145,13 @@ const Login: React.FC = () => {
 
     return validationErrors;
   };
+
+  useEffect(() => {
+    if (userData.isRegistered && formFieldEventData.current) {
+      loginUser(formFieldEventData.current, linksData?.LOGIN);
+      getAdvancedLinks(linksData?.ADVANCED_LINKS);
+    }
+  }, [linksData?.ADVANCED_LINKS, linksData?.LOGIN, loginUser, userData.isRegistered]);
 
   return (
     <LoginWrapper>

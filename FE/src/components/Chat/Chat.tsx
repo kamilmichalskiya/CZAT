@@ -23,8 +23,13 @@ import { toast } from 'react-toastify';
 import { MagnifyingGlass } from '@styled-icons/entypo/MagnifyingGlass';
 import { Send } from '@styled-icons/boxicons-solid/Send';
 import { LogOut } from '@styled-icons/entypo/LogOut';
+import { useActions } from '../../hooks/useActions';
+import { useTypedSelector } from '../../hooks/useTypedSelector';
 
 const Chat: React.FC = () => {
+  const { logoutUser } = useActions();
+  const { data: advancedLinksData } = useTypedSelector((state) => state.advancedLinks);
+
   useEffect(() => {
     toast.success('Zalogowano pomyślnie! Witaj w Czat!', { toastId: 'toast-login-success' });
   }, []);
@@ -33,7 +38,7 @@ const Chat: React.FC = () => {
     <ChatWrapper>
       <ChatHeader>
         <span>CZAT</span>
-        <IconStyleWrapper>
+        <IconStyleWrapper onClick={() => logoutUser(advancedLinksData?.LOGOUT)}>
           <LogOut size="32" />
         </IconStyleWrapper>
       </ChatHeader>

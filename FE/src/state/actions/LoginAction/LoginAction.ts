@@ -6,7 +6,7 @@ interface LoginUserAction {
 
 interface LoginUserSuccessAction {
   type: ActionType.LOGIN_USER_SUCCESS;
-  payload: { username: string; password: string; loggedIn: boolean };
+  payload: { username: string; password: string; isLoggedIn: boolean; isRegistered: boolean };
 }
 
 interface LoginUserErrorAction {
