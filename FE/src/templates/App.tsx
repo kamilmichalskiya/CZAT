@@ -1,11 +1,26 @@
+import { useEffect } from 'react';
+import { useTypedSelector } from '../hooks/useTypedSelector';
+import { useActions } from '../hooks/useActions';
 import Login from '../components/Login/Login';
 import Chat from '../components/Chat/Chat';
-import { useTypedSelector } from '../hooks/useTypedSelector';
 
 const App: React.FC = () => {
-  const { loggedIn } = useTypedSelector((state) => state.userSession);
+  const { getLinks, getAdvancedLinks } = useActions();
+  const { userData } = useTypedSelector((state) => state.user);
+  const { data: linksData } = useTypedSelector((state) => state.links);
 
-  return <>{loggedIn ? <Chat /> : <Login />}</>;
+  useEffect(() => {
+    getLinks();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (userData.loggedIn) {
+      getAdvancedLinks(linksData?.ADVANCED_LINKS);
+    }
+  }, [getAdvancedLinks, linksData?.ADVANCED_LINKS, userData.loggedIn]);
+
+  return <>{userData.loggedIn ? <Chat /> : <Login />}</>;
 };
 
 export default App;

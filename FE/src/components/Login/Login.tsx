@@ -22,16 +22,15 @@ import { Lock } from '@styled-icons/fa-solid/Lock';
 import { EyeOutline } from '@styled-icons/evaicons-outline/EyeOutline';
 import { toast } from 'react-toastify';
 import Loader from '../Loader/Loader';
-// import '@fontsource/montserrat';
 
 interface FormData {
-  login: string;
+  username: string;
   password: string;
   confirmPassword?: string;
 }
 
 const initialFormData = {
-  login: '',
+  username: '',
   password: '',
   confirmPassword: '',
 };
@@ -48,7 +47,8 @@ const Login: React.FC = () => {
   const [isLoginView, setIsLoginView] = useState(true);
 
   const { loginUser, registerUser } = useActions();
-  const { error, loading } = useTypedSelector((state) => state.userSession);
+  const { error, loading } = useTypedSelector((state) => state.user);
+  const { data } = useTypedSelector((state) => state.links);
 
   useEffect(() => {
     const { search: queryParams } = window.location;
@@ -87,7 +87,7 @@ const Login: React.FC = () => {
       }
     }
 
-    loginUser({ login: formData.login, password: formData.password });
+    loginUser({ username: formData.username, password: formData.password }, data?.LOGIN);
   };
 
   const onRegisterSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
@@ -102,18 +102,18 @@ const Login: React.FC = () => {
       }
     }
 
-    registerUser({ login: formData.login, password: formData.password });
+    registerUser({ username: formData.username, password: formData.password }, data?.REGISTER);
   };
 
   const getValidationErrors = (type: 'login' | 'register' = 'login'): FormData => {
     const validationErrors = { ...initialFormData };
 
-    if (!formData.login) {
-      validationErrors.login = 'Adres e-mail jest wymagany!';
-    } else if (formData.login.length < 4) {
-      validationErrors.login = 'Adres e-mail jest zbyt krótki!';
-    } else if (!formData.login.match(emailRegex)) {
-      validationErrors.login = 'Adres e-mail ma niepoprawny format!';
+    if (!formData.username) {
+      validationErrors.username = 'Adres e-mail jest wymagany!';
+    } else if (formData.username.length < 4) {
+      validationErrors.username = 'Adres e-mail jest zbyt krótki!';
+    } else if (!formData.username.match(emailRegex)) {
+      validationErrors.username = 'Adres e-mail ma niepoprawny format!';
     }
 
     if (!formData.password) {
@@ -143,20 +143,20 @@ const Login: React.FC = () => {
       </LoginTitle>
       <LoginDescription>{isLoginView ? 'Zaloguj się, aby uzyskać dostęp do rozmów.' : 'Zarejestruj się, aby rozpocząć rozmowy!'}</LoginDescription>
       <form onSubmit={isLoginView ? (e) => onLoginSubmit(e) : (e) => onRegisterSubmit(e)}>
-        <UserInputWrapper hasError={!!formErrors.login}>
+        <UserInputWrapper hasError={!!formErrors.username}>
           <DarkIconStyleWrapper>
             <PersonFill size="18" />
           </DarkIconStyleWrapper>
           <UserInput
             type="email"
-            name="login"
-            autoComplete="login"
+            name="username"
+            autoComplete="username"
             placeholder="Adres e-mail"
-            value={formData.login}
+            value={formData.username}
             onChange={(e) => onValueChangedHandler(e)}
           />
         </UserInputWrapper>
-        <ErrorText>{formErrors.login}</ErrorText>
+        <ErrorText>{formErrors.username}</ErrorText>
         <UserInputWrapper hasError={!!formErrors.password}>
           <DarkIconStyleWrapper>
             <Lock size="18" />

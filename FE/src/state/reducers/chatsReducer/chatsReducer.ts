@@ -1,5 +1,5 @@
-import { ActionType } from '../action-types';
-import { UsersAction } from '../actions';
+import { ActionType } from '../../action-types';
+import { ChatsAction } from '../../actions';
 
 interface UsersState {
   loading: boolean;
@@ -13,13 +13,13 @@ const initialState = {
   data: [],
 };
 
-const reducer = (state: UsersState = initialState, action: UsersAction): UsersState => {
+const reducer = (state: UsersState = initialState, action: ChatsAction): UsersState => {
   switch (action.type) {
-    case ActionType.SEARCH_USERS:
+    case ActionType.GET_ALL_CHATS:
       return { loading: true, error: null, data: [] };
-    case ActionType.SEARCH_USERS_SUCCESS:
+    case ActionType.GET_ALL_CHATS_SUCCESS:
       return { loading: false, error: null, data: action.payload };
-    case ActionType.SEARCH_USERS_ERROR:
+    case ActionType.GET_ALL_CHATS_ERROR:
       return { loading: false, error: action.payload, data: [] };
     default:
       return state;

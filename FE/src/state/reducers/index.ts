@@ -1,10 +1,14 @@
 import { combineReducers } from 'redux';
-import userSessionReducer from './userSessionReducer';
-import usersReducer from './usersReducer';
+import userReducer from './userReducer/userReducer';
+import usersReducer from './chatsReducer/chatsReducer';
+import linksReducer from './linksReducer/linksReducer';
+import advancedLinksReducer from './advancedLinksReducer/advancedLinksReducer';
 
 const reducers = combineReducers({
-  userSession: userSessionReducer,
-  users: usersReducer,
+  links: linksReducer,
+  advancedLinks: advancedLinksReducer,
+  user: userReducer,
+  chats: usersReducer,
 });
 
 export default reducers;
