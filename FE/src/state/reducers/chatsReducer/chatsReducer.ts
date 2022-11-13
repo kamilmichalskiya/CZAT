@@ -4,13 +4,13 @@ import { ChatsAction } from '../../actions';
 interface UsersState {
   loading: boolean;
   error: string | null;
-  data: string[];
+  data: {}[] | null;
 }
 
 const initialState = {
   loading: false,
   error: null,
-  data: [],
+  data: null,
 };
 
 const reducer = (state: UsersState = initialState, action: ChatsAction): UsersState => {

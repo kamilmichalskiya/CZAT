@@ -22,7 +22,6 @@ import { Lock } from '@styled-icons/fa-solid/Lock';
 import { EyeOutline } from '@styled-icons/evaicons-outline/EyeOutline';
 import { toast } from 'react-toastify';
 import Loader from '../Loader/Loader';
-import { getAdvancedLinks } from '../../state/action-creators';
 
 interface FormData {
   username: string;
@@ -151,7 +150,7 @@ const Login: React.FC = () => {
       loginUser(formFieldEventData.current, linksData?.LOGIN);
       getAdvancedLinks(linksData?.ADVANCED_LINKS);
     }
-  }, [linksData?.ADVANCED_LINKS, linksData?.LOGIN, loginUser, userData.isRegistered]);
+  }, [getAdvancedLinks, linksData?.ADVANCED_LINKS, linksData?.LOGIN, loginUser, userData.isRegistered]);
 
   return (
     <LoginWrapper>

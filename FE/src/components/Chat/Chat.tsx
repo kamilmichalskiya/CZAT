@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import {
   ChatWrapper,
   ChatHeader,
@@ -19,7 +18,6 @@ import {
   RightPanelConversation,
   RightPanelBottomWrapper,
 } from './Chat-styled';
-import { toast } from 'react-toastify';
 import { MagnifyingGlass } from '@styled-icons/entypo/MagnifyingGlass';
 import { Send } from '@styled-icons/boxicons-solid/Send';
 import { LogOut } from '@styled-icons/entypo/LogOut';
@@ -29,10 +27,6 @@ import { useTypedSelector } from '../../hooks/useTypedSelector';
 const Chat: React.FC = () => {
   const { logoutUser } = useActions();
   const { data: advancedLinksData } = useTypedSelector((state) => state.advancedLinks);
-
-  useEffect(() => {
-    toast.success('Zalogowano pomyślnie! Witaj w Czat!', { toastId: 'toast-login-success' });
-  }, []);
 
   return (
     <ChatWrapper>

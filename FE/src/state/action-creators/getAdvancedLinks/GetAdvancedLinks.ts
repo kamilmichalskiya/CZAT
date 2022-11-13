@@ -23,18 +23,25 @@ export const getAdvancedLinks = (url?: string) => {
       });
       return;
     }
-    const response = await fetch(url);
-    if (!response.ok) {
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        dispatch({
+          type: ActionType.GET_ADVANCED_LINKS_ERROR,
+          payload: 'Wystąpił problem z żądaniem! Spróbuj ponownie. (Code: GET_ADVANCED_LINKS_STATUS)',
+        });
+        return;
+      }
+      const data = await response.json();
+      dispatch({
+        type: ActionType.GET_ADVANCED_LINKS_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
       dispatch({
         type: ActionType.GET_ADVANCED_LINKS_ERROR,
         payload: 'Wystąpił problem z żądaniem! Spróbuj ponownie. (Code: GET_ADVANCED_LINKS)',
       });
-      return;
     }
-    const data = await response.json();
-    dispatch({
-      type: ActionType.GET_ADVANCED_LINKS_SUCCESS,
-      payload: data,
-    });
   };
 };

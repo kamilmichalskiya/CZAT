@@ -6,7 +6,7 @@ interface GetAllChatsAction {
 
 interface GetAllChatsSuccessAction {
   type: ActionType.GET_ALL_CHATS_SUCCESS;
-  payload: string[];
+  payload: {}[];
 }
 
 interface GetAllChatsErrorAction {
