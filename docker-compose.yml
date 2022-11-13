@@ -29,6 +29,7 @@ services:
       SPRING_DATA_MONGODB_HOST: mongo
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/czat
       SERVER_PORT: 8080
+#      APP_HOST: backend
     depends_on:
       - mongo
       - postgres
@@ -38,8 +39,8 @@ services:
     build: ./fe
     container_name: frontend
     restart: unless-stopped
-    environment:
-      REACT_APP_CZAT_API_MAIN_LINK: https://backend:8080/api
+#    environment:
+#      REACT_APP_CZAT_API_MAIN_LINK: https://backend:8080/api
     ports:
       - "80:3000"
     depends_on:
