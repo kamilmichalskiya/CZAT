@@ -1,4 +1,3 @@
-import { Cases } from 'styled-icons/material';
 import { ActionType } from '../../action-types';
 import { LoginAction, RegisterAction } from '../../actions';
 

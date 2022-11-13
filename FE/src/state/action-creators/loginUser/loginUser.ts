@@ -3,7 +3,7 @@ import { Dispatch } from 'redux';
 import { ActionType } from '../../action-types';
 import { LoginAction } from '../../actions';
 
-export const loginUser = (credentials: any, url: string | undefined) => {
+export const loginUser = (credentials: FormData, url: string | undefined) => {
   return async (dispatch: Dispatch<LoginAction>) => {
     dispatch({
       type: ActionType.LOGIN_USER,
@@ -18,8 +18,7 @@ export const loginUser = (credentials: any, url: string | undefined) => {
 
     const requestOptions = {
       method: 'POST',
-      body: JSON.stringify(credentials),
-      headers: new Headers({ 'content-type': 'application/json' }),
+      body: new URLSearchParams(credentials as URLSearchParams),
     };
     const response = await fetch(url, requestOptions);
     if (response.status === 403 || (response.status !== 200 && response.status !== 301)) {
@@ -31,7 +30,7 @@ export const loginUser = (credentials: any, url: string | undefined) => {
     }
     dispatch({
       type: ActionType.LOGIN_USER_SUCCESS,
-      payload: { username: credentials.username, password: credentials.password, loggedIn: true },
+      payload: { username: 'credentials.username', password: 'credentials.password', loggedIn: true },
     });
   };
 };

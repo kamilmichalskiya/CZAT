@@ -35,8 +35,8 @@ const initialFormData = {
   confirmPassword: '',
 };
 
-const emailRegex =
-  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+// const emailRegex =
+//   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState<FormData>(initialFormData);
@@ -87,7 +87,10 @@ const Login: React.FC = () => {
       }
     }
 
-    loginUser({ username: formData.username, password: formData.password }, data?.LOGIN);
+    if (event.target) {
+      const loginRequestBody = new FormData(event.target as HTMLFormElement);
+      loginUser(loginRequestBody, data?.LOGIN);
+    }
   };
 
   const onRegisterSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
@@ -112,9 +115,10 @@ const Login: React.FC = () => {
       validationErrors.username = 'Adres e-mail jest wymagany!';
     } else if (formData.username.length < 4) {
       validationErrors.username = 'Adres e-mail jest zbyt krótki!';
-    } else if (!formData.username.match(emailRegex)) {
-      validationErrors.username = 'Adres e-mail ma niepoprawny format!';
     }
+    // else if (!formData.username.match(emailRegex)) {
+    //   validationErrors.username = 'Adres e-mail ma niepoprawny format!';
+    // }
 
     if (!formData.password) {
       validationErrors.password = 'Hasło jest wymagane!';
@@ -148,7 +152,7 @@ const Login: React.FC = () => {
             <PersonFill size="18" />
           </DarkIconStyleWrapper>
           <UserInput
-            type="email"
+            type="text"
             name="username"
             autoComplete="username"
             placeholder="Adres e-mail"
