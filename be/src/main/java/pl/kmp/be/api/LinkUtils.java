@@ -16,7 +16,7 @@ public class LinkUtils {
 
     public Link createTopicLink(final String topic, final LinkRelations relation) {
         final String username = UsersBF.getLoggedUser().orElse("");
-        return Link.of(String.format("/%s/%s", username, topic), relation.toString());
+        return Link.of(String.format("/user/%s/%s", username, topic), relation.toString());
     }
 
     public Link createWebsocketLink() {

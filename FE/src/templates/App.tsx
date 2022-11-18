@@ -40,7 +40,11 @@ const App: React.FC = () => {
     }
   }, [advancedLinksError, chatsError]);
 
-  return <>{userData.isLoggedIn && !advancedLinksError ? <Chat /> : <Login />}</>;
+  const isUserAuthorized = () => {
+    return userData.isLoggedIn && !advancedLinksError && linksData && Object.keys(linksData).length !== 0 && !chatsError;
+  };
+
+  return <>{isUserAuthorized() ? <Chat /> : <Login />}</>;
   // && advancedLinksData && Object.keys(advancedLinksData).length !== 0
 };
 

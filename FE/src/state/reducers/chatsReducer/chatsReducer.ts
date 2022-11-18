@@ -4,13 +4,32 @@ import { ChatsAction } from '../../actions';
 interface UsersState {
   loading: boolean;
   error: string | null;
-  data: {}[] | null;
+  data: chatData[];
+}
+
+interface chatData {
+  id: number;
+  lastMessageDate: string;
+  messages: string[];
+  title: string;
+  users: {
+    username: string;
+    password: string;
+  }[];
+  _links: {
+    GET_CHAT: {
+      href: string;
+    };
+    SEND_MESSAGE: {
+      href: string;
+    };
+  };
 }
 
 const initialState = {
   loading: false,
   error: null,
-  data: null,
+  data: [],
 };
 
 const reducer = (state: UsersState = initialState, action: ChatsAction): UsersState => {
@@ -18,7 +37,11 @@ const reducer = (state: UsersState = initialState, action: ChatsAction): UsersSt
     case ActionType.GET_ALL_CHATS:
       return { loading: true, error: null, data: [] };
     case ActionType.GET_ALL_CHATS_SUCCESS:
-      return { loading: false, error: null, data: action.payload };
+      let result: chatData[] = [];
+      if ('_embedded' in action.payload && 'uiChatList' in action.payload._embedded) {
+        result = action.payload._embedded.uiChatList;
+      }
+      return { loading: false, error: null, data: result };
     case ActionType.GET_ALL_CHATS_ERROR:
       return { loading: false, error: action.payload, data: [] };
     default:

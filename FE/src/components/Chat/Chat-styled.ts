@@ -280,3 +280,66 @@ export const RightPanelBottomWrapper = styled.div`
     }
   }
 `;
+
+export const UserInputWrapper = styled.div`
+  background-color: ${({ theme }) => theme.colors.tertiary};
+  display: flex;
+  align-items: center;
+  margin: 20px 0 20px;
+  height: 55px;
+  width: 100%;
+  max-width: 320px;
+  padding: 10px 15px;
+  border: 2px solid;
+  border-color: ${({ theme }) => theme.colors.tertiary};
+`;
+
+export const UserInput = styled.input`
+  width: 100%;
+  height: 100%;
+  margin-left: 20px;
+  border: none;
+  flex-grow: 1;
+  font-size: ${({ theme }) => theme.fontSize.l};
+  background-color: ${({ theme }) => theme.colors.tertiary};
+  ::placeholder {
+    color: ${({ theme }) => theme.colors.placeholder};
+    font-size: ${({ theme }) => theme.fontSize.s};
+    letter-spacing: 0.08em;
+  }
+  &:focus {
+    outline: none;
+  }
+`;
+
+export const DarkIconStyleWrapper = styled(IconStyleWrapper)`
+  ${StyledIconBase} {
+    color: ${({ theme }) => theme.colors.placeholder};
+  }
+  &:hover {
+    cursor: default;
+  }
+`;
+
+export const ModalHeader = styled.h2`
+  margin: 0 35px;
+`;
+
+export const PrimaryButton = styled.button`
+  height: 55px;
+  width: 100%;
+  max-width: 320px;
+  margin: 20px 0 30px;
+  background-color: ${({ theme }) => theme.colors.primary};
+  font-size: ${({ theme }) => theme.fontSize.l};
+  color: ${({ theme }) => theme.colors.white};
+  border-radius: 100px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  transition: opacity 0.5s;
+
+  &:hover {
+    opacity: 0.9;
+    transition: opacity 0.5s;
+  }
+`;

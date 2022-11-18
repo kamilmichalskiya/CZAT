@@ -6,7 +6,30 @@ interface GetAllChatsAction {
 
 interface GetAllChatsSuccessAction {
   type: ActionType.GET_ALL_CHATS_SUCCESS;
-  payload: {}[];
+  payload:
+    | {
+        _embedded: {
+          uiChatList: {
+            id: number;
+            lastMessageDate: string;
+            messages: string[];
+            title: string;
+            users: {
+              username: string;
+              password: string;
+            }[];
+            _links: {
+              GET_CHAT: {
+                href: string;
+              };
+              SEND_MESSAGE: {
+                href: string;
+              };
+            };
+          }[];
+        };
+      }
+    | {};
 }
 
 interface GetAllChatsErrorAction {
