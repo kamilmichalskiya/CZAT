@@ -22,6 +22,8 @@ import {
   DarkIconStyleWrapper,
   ModalHeader,
   PrimaryButton,
+  ReceivedMessage,
+  SentMessage,
 } from './Chat-styled';
 import { PersonFill } from '@styled-icons/bootstrap/PersonFill';
 import { useState, useEffect } from 'react';
@@ -33,17 +35,26 @@ import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { Modal } from '../Modal/Modal';
 import Stomp from 'stompjs';
 import { toast } from 'react-toastify';
+import { chatData } from '../../state/reducers/chatsReducer/chatsReducer'; // TODO move type from reducer
 
 const Chat: React.FC = () => {
-  const { logoutUser } = useActions();
-  const [clientConnection, setClientConnection] = useState<Stomp.Client | null>(null);
-  const [messagesChannels, setMessagesChannels] = useState<Stomp.Subscription | null>(null);
-  const [chatsChannels, setChatsChannels] = useState<Stomp.Subscription | null>(null);
+  const { logoutUser, getAllChats } = useActions();
+  const { data: advancedLinksData } = useTypedSelector((state) => state.advancedLinks);
+  const { data: chatsData } = useTypedSelector((state) => state.chats);
+  const { userData } = useTypedSelector((state) => state.user);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [createMessageUsername, setCreateMessageUsername] = useState<string>('');
   const [newMessage, setNewMessage] = useState<string>('');
-  const { data: advancedLinksData } = useTypedSelector((state) => state.advancedLinks);
-  const { data: chatsData } = useTypedSelector((state) => state.chats);
+  const [activeChat, setActiveChat] = useState<chatData | null>(null);
+
+  // websockets
+  const [clientConnection, setClientConnection] = useState<Stomp.Client | null>(null);
+  const [messagesChannels, setMessagesChannels] = useState<Stomp.Subscription | null>(null);
+  const [chatsChannels, setChatsChannels] = useState<Stomp.Subscription | null>(null);
+
+  // let intervalID = setInterval(async () => {
+  //   getAllChats(advancedLinksData?.GET_ALL_CHATS);
+  // }, 2000);
 
   useEffect(() => {
     createConnection();
@@ -85,7 +96,7 @@ const Chat: React.FC = () => {
   }, [advancedLinksData, clientConnection]);
 
   useEffect(() => {
-    const getLatestConverstation = () => {
+    const getLatestConverstation = (): chatData => {
       const mostRecentDate = new Date(
         Math.max.apply(
           null,
@@ -100,12 +111,30 @@ const Chat: React.FC = () => {
         return d.getTime() === mostRecentDate.getTime();
       })[0];
       console.log(`Most recent chat: ${JSON.stringify(mostRecentObject)}`);
+      return mostRecentObject;
     };
 
     if (chatsData.length !== 0) {
-      getLatestConverstation();
+      const latestConversation = getLatestConverstation();
+      setActiveChatMessagges(latestConversation._links.GET_CHAT.href, latestConversation);
     }
   }, [chatsData]);
+
+  const setActiveChatMessagges = async (url: string, latestConversation: chatData) => {
+    const response = await fetch(url);
+    const data: chatData = await response.json();
+    const sortedMessages = data.messages.sort((a, b) => {
+      return Number(new Date(b.messageDate)) - Number(new Date(a.messageDate));
+    });
+    latestConversation.messages = sortedMessages;
+    setActiveChat(latestConversation);
+  };
+
+  const changeChat = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    // const response = await fetch(`${advancedLinksData?.GET_ALL_CHATS}/${e.target.id}`);
+    // const data: chatData = await response.json();
+    // setActiveChatMessagges(data._links.GET_CHAT.href, data);
+  };
 
   const createConnection = () => {
     if (!advancedLinksData) {
@@ -118,7 +147,6 @@ const Chat: React.FC = () => {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const unsubscribe = () => {
-    // const rollSubscription = rollChannels.get(id);
     if (messagesChannels) {
       messagesChannels.unsubscribe();
       setMessagesChannels(null);
@@ -133,6 +161,7 @@ const Chat: React.FC = () => {
   const onLogoutIconClick = (): void => {
     unsubscribe();
     logoutUser(advancedLinksData?.LOGOUT);
+    // clearInterval(intervalID);
   };
 
   const createChat = async () => {
@@ -146,13 +175,32 @@ const Chat: React.FC = () => {
     };
     const response = await fetch(advancedLinksData.WRITE_TO_CHAT, requestOptions);
     if (!response.ok) {
-      toast.error(`Wystąpił błąd. Spróbuj ponownie później (Code: WRITE_TO_CHAT Status)`, { toastId: 'toast-login-error-links' });
+      toast.error('Wystąpił błąd. Spróbuj ponownie później (Code: WRITE_TO_CHAT status)', { toastId: 'toast-write-to-chat-error' });
+    } else {
+      toast.success('Storzyłeś nowy chat!', { toastId: 'toast-write-to-chat-success' });
+      setShowModal(false);
     }
   };
 
-  const sendMessage = () => {
-    console.log('SEND_MESSAGE');
+  const sendMessage = async () => {
+    if (!activeChat) {
+      return;
+    }
+    const requestOptions = {
+      method: 'POST',
+      body: JSON.stringify({ text: newMessage }),
+    };
+    const response = await fetch(activeChat._links.SEND_MESSAGE.href, requestOptions);
+    if (!response.ok) {
+      toast.error('Wystąpił błąd. Spróbuj ponownie później (Code: SEND_MESSAGE status)', { toastId: 'toast-send-message-error' });
+    } else {
+      toast.success('Wysłano wiadomość!', { toastId: 'toast-send-message-success' });
+    }
+    getAllChats(advancedLinksData?.GET_ALL_CHATS);
   };
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
   return (
     <ChatWrapper>
@@ -172,7 +220,7 @@ const Chat: React.FC = () => {
               onChange={(e) => setCreateMessageUsername(e.target.value)}
             />
           </UserInputWrapper>
-          <PrimaryButton onClick={() => createChat}>Wyślij</PrimaryButton>
+          <PrimaryButton onClick={() => createChat()}>Wyślij</PrimaryButton>
         </>
       </Modal>
       <ChatHeader>
@@ -181,7 +229,7 @@ const Chat: React.FC = () => {
           <LogOut size="32" />
         </IconStyleWrapper>
       </ChatHeader>
-      <LeftPanelWrapper>
+      <LeftPanelWrapper isChatActive={Boolean(activeChat)}>
         <SearchBarWrapper>
           <InactiveIconStyleWrapper>
             <MagnifyingGlass size="20" />
@@ -192,36 +240,70 @@ const Chat: React.FC = () => {
         {chatsData.length ? (
           chatsData.map((chat) => {
             return (
-              <ListElementWrapper>
+              <ListElementWrapper
+                id={`${chat.id}`}
+                onClick={(e) => {
+                  changeChat(e);
+                }}
+              >
                 <ListElementPhoto>{Array.from(chat.users[1]?.username || 'Rozmówca')[0]}</ListElementPhoto>
                 <ListElementContainer>
                   <ListElementUpperRow>
                     <ListElementUsername>{chat.users[1]?.username || 'Rozmówca'}</ListElementUsername>
-                    <span>{chat.lastMessageDate}</span>
+                    <span>{`${Math.floor(Math.abs(new Date(chat.lastMessageDate).getTime() - new Date().getTime()) / 36e5)} godzin temu`}</span>
                   </ListElementUpperRow>
-                  <span>{chat.messages[0] || 'Zacznij pisać już teraz!'}</span>
+                  <span>{chat.messages[0]?.text || 'Zacznij pisać już teraz!'}</span>
                 </ListElementContainer>
               </ListElementWrapper>
             );
           })
         ) : (
-          <h3>Obecnie nie należysz do żadnego chatu.</h3>
+          <h3 style={{ textAlign: 'center', marginTop: '50px' }}>Obecnie nie należysz do żadnego chatu.</h3>
         )}
       </LeftPanelWrapper>
-
-      <RightPanelWrapper>
+      <RightPanelWrapper isChatActive={Boolean(activeChat)}>
         <RightPanelHeader>
           <RightPanelHeaderContent>
-            <ListElementPhoto>{Array.from('Nickname123')[0]}</ListElementPhoto>
+            <ListElementPhoto>
+              {activeChat && activeChat.users
+                ? Array.from(
+                    activeChat.users.find((element) => {
+                      return element.username !== userData.username;
+                    })?.username as string
+                  )[0]
+                : 'E'}
+            </ListElementPhoto>
             <ListElementContainer>
               <ListElementUpperRow>
-                <ListElementUsername>Nickname123</ListElementUsername>
+                <ListElementUsername>
+                  {activeChat && activeChat.users
+                    ? (activeChat.users.find((element) => {
+                        return element.username !== userData.username;
+                      })?.username as string)
+                    : 'Example user'}
+                </ListElementUsername>
               </ListElementUpperRow>
-              <span>1h ago</span>
+              <span>
+                {activeChat
+                  ? `${Math.floor(Math.abs(new Date(activeChat.lastMessageDate).getTime() - new Date().getTime()) / 36e5)} godzin temu`
+                  : ''}
+              </span>
             </ListElementContainer>
           </RightPanelHeaderContent>
         </RightPanelHeader>
-        <RightPanelConversation></RightPanelConversation>
+        <RightPanelConversation>
+          {console.log(`JSX activeChat ${activeChat}, activeChat.messages: ${activeChat?.messages}`)}
+          {(activeChat &&
+            activeChat.messages &&
+            (activeChat.messages?.slice(0, 15).map((message) => {
+              return message.author === userData.username ? (
+                <SentMessage>{message.text}</SentMessage>
+              ) : (
+                <ReceivedMessage>{message.text}</ReceivedMessage>
+              );
+            }) as any)) ||
+            ''}
+        </RightPanelConversation>
         <RightPanelBottomWrapper>
           <input value={newMessage} onChange={(e) => setNewMessage(e.target.value)} placeholder="Wpisz wiadomość"></input>
           <GreenIconStyleWrapper onClick={sendMessage}>

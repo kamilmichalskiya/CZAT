@@ -79,8 +79,12 @@ export const ChatHeader = styled.div`
   }
 `;
 
-export const LeftPanelWrapper = styled.div`
-  grid-area: 2 / 1 / 3 / 2;
+interface PanelProps {
+  isChatActive: boolean;
+}
+
+export const LeftPanelWrapper = styled.div<PanelProps>`
+  grid-area: ${({ isChatActive }) => (isChatActive ? '2 / 1 / 3 / 2' : '2 / 1 / 3 / 3')};
   border-radius: 10px;
   border: 2px solid ${({ theme }) => theme.colors.grey};
   padding: 5px;
@@ -232,7 +236,8 @@ export const ListElementWrapper = styled.div`
   }
 `;
 
-export const RightPanelWrapper = styled.div`
+export const RightPanelWrapper = styled.div<PanelProps>`
+  display: ${({ isChatActive }) => (isChatActive ? 'block' : 'none')};
   grid-area: 2 / 2 / 3 / 3;
   background-color: ${({ theme }) => theme.colors.grey};
   border-radius: 10px;
@@ -254,12 +259,6 @@ export const RightPanelHeaderContent = styled.div`
   padding: 10px 15px;
   margin-bottom: 10px;
   height: 4em;
-`;
-
-export const RightPanelConversation = styled.div`
-  flex-grow: 1;
-  border-top: 1px solid ${({ theme }) => theme.colors.lightGrey};
-  border-bottom: 1px solid ${({ theme }) => theme.colors.lightGrey};
 `;
 
 export const RightPanelBottomWrapper = styled.div`
@@ -342,4 +341,33 @@ export const PrimaryButton = styled.button`
     opacity: 0.9;
     transition: opacity 0.5s;
   }
+`;
+
+export const RightPanelConversation = styled.div`
+  display: flex;
+  flex-direction: column-reverse;
+  flex-grow: 1;
+  overflow: auto;
+  border-top: 1px solid ${({ theme }) => theme.colors.lightGrey};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.lightGrey};
+`;
+
+export const ReceivedMessage = styled.div`
+  margin-bottom: 10px;
+  background-color: #ddd;
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+  text-align: left;
+  padding: 5px;
+  color: #000;
+`;
+
+export const SentMessage = styled.div`
+  margin-bottom: 10px;
+  background-color: ${({ theme }) => theme.colors.primary};
+  color: #fff;
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
+  text-align: right;
+  padding: 5px;
 `;

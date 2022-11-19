@@ -12,7 +12,13 @@ interface GetAllChatsSuccessAction {
           uiChatList: {
             id: number;
             lastMessageDate: string;
-            messages: string[];
+            messages: {
+              author: string;
+              chatId: number;
+              id: string;
+              messageDate: string;
+              text: string;
+            }[];
             title: string;
             users: {
               username: string;

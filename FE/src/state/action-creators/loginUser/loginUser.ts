@@ -30,7 +30,12 @@ export const loginUser = (credentials: FormData, url: string | undefined) => {
     }
     dispatch({
       type: ActionType.LOGIN_USER_SUCCESS,
-      payload: { username: 'credentials.username', password: 'credentials.password', isRegistered: true, isLoggedIn: true },
+      payload: {
+        username: credentials.get('username') as string,
+        password: credentials.get('password') as string,
+        isRegistered: true,
+        isLoggedIn: true,
+      },
     });
   };
 };
