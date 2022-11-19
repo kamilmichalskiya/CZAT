@@ -11,12 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import pl.kmp.be.bm.users.control.UsersRepository;
-
-import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -37,7 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // @formatter:off
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/chats/**","/api/advanced").permitAll()
+                .antMatchers("/api/chats/**","/api/advanced").authenticated()
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()

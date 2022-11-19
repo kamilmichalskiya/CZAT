@@ -172,6 +172,7 @@ const Chat: React.FC = () => {
     const requestOptions = {
       method: 'POST',
       body: JSON.stringify({ users: [{ username: createMessageUsername }] }),
+      headers: {'Content-Type': 'application/json'},
     };
     const response = await fetch(advancedLinksData.WRITE_TO_CHAT, requestOptions);
     if (!response.ok) {
@@ -189,6 +190,7 @@ const Chat: React.FC = () => {
     const requestOptions = {
       method: 'POST',
       body: JSON.stringify({ text: newMessage }),
+      headers: {'Content-Type': 'application/json'},
     };
     const response = await fetch(activeChat._links.SEND_MESSAGE.href, requestOptions);
     if (!response.ok) {
