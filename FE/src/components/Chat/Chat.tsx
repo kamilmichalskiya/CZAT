@@ -52,12 +52,18 @@ const Chat: React.FC = () => {
   const [messagesChannels, setMessagesChannels] = useState<Stomp.Subscription | null>(null);
   const [chatsChannels, setChatsChannels] = useState<Stomp.Subscription | null>(null);
 
-  // let intervalID = setInterval(async () => {
-  //   getAllChats(advancedLinksData?.GET_ALL_CHATS);
-  // }, 2000);
-
   useEffect(() => {
     createConnection();
+
+    const intervalID = setInterval(async () => {
+      if (chatsData.length !== 0 && advancedLinksData) {
+        getAllChats(advancedLinksData.GET_ALL_CHATS);
+        const latestConversation = getLatestConverstation();
+        setActiveChatMessagges(latestConversation._links.GET_CHAT.href, latestConversation);
+      }
+    }, 2000);
+
+    return () => clearInterval(intervalID);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -96,29 +102,30 @@ const Chat: React.FC = () => {
   }, [advancedLinksData, clientConnection]);
 
   useEffect(() => {
-    const getLatestConverstation = (): chatData => {
-      const mostRecentDate = new Date(
-        Math.max.apply(
-          null,
-          chatsData.map((e) => {
-            return new Date(e.lastMessageDate) as any;
-          })
-        )
-      );
-      console.log(mostRecentDate);
-      const mostRecentObject = chatsData.filter((e) => {
-        const d = new Date(e.lastMessageDate);
-        return d.getTime() === mostRecentDate.getTime();
-      })[0];
-      console.log(`Most recent chat: ${JSON.stringify(mostRecentObject)}`);
-      return mostRecentObject;
-    };
-
     if (chatsData.length !== 0) {
       const latestConversation = getLatestConverstation();
       setActiveChatMessagges(latestConversation._links.GET_CHAT.href, latestConversation);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chatsData]);
+
+  const getLatestConverstation = (): chatData => {
+    const mostRecentDate = new Date(
+      Math.max.apply(
+        null,
+        chatsData.map((e) => {
+          return new Date(e.lastMessageDate) as any;
+        })
+      )
+    );
+    console.log(mostRecentDate);
+    const mostRecentObject = chatsData.filter((e) => {
+      const d = new Date(e.lastMessageDate);
+      return d.getTime() === mostRecentDate.getTime();
+    })[0];
+    console.log(`Most recent chat: ${JSON.stringify(mostRecentObject)}`);
+    return mostRecentObject;
+  };
 
   const setActiveChatMessagges = async (url: string, latestConversation: chatData) => {
     const response = await fetch(url);
@@ -130,10 +137,10 @@ const Chat: React.FC = () => {
     setActiveChat(latestConversation);
   };
 
-  const changeChat = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    // const response = await fetch(`${advancedLinksData?.GET_ALL_CHATS}/${e.target.id}`);
-    // const data: chatData = await response.json();
-    // setActiveChatMessagges(data._links.GET_CHAT.href, data);
+  const changeChat = async (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    const response = await fetch(`${advancedLinksData?.GET_ALL_CHATS}/${(e.target as HTMLInputElement).id}`);
+    const data: chatData = await response.json();
+    setActiveChatMessagges(data._links.GET_CHAT.href, data);
   };
 
   const createConnection = () => {
@@ -172,7 +179,7 @@ const Chat: React.FC = () => {
     const requestOptions = {
       method: 'POST',
       body: JSON.stringify({ users: [{ username: createMessageUsername }] }),
-      headers: {'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
     };
     const response = await fetch(advancedLinksData.WRITE_TO_CHAT, requestOptions);
     if (!response.ok) {
@@ -190,7 +197,7 @@ const Chat: React.FC = () => {
     const requestOptions = {
       method: 'POST',
       body: JSON.stringify({ text: newMessage }),
-      headers: {'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
     };
     const response = await fetch(activeChat._links.SEND_MESSAGE.href, requestOptions);
     if (!response.ok) {
@@ -199,6 +206,7 @@ const Chat: React.FC = () => {
       toast.success('Wysłano wiadomość!', { toastId: 'toast-send-message-success' });
     }
     getAllChats(advancedLinksData?.GET_ALL_CHATS);
+    setNewMessage('');
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -248,10 +256,10 @@ const Chat: React.FC = () => {
                   changeChat(e);
                 }}
               >
-                <ListElementPhoto>{Array.from(chat.users[1]?.username || 'Rozmówca')[0]}</ListElementPhoto>
+                <ListElementPhoto>{Array.from(chat?.title || 'Rozmówca')[0]}</ListElementPhoto>
                 <ListElementContainer>
                   <ListElementUpperRow>
-                    <ListElementUsername>{chat.users[1]?.username || 'Rozmówca'}</ListElementUsername>
+                    <ListElementUsername>{chat?.title || 'Rozmówca'}</ListElementUsername>
                     <span>{`${Math.floor(Math.abs(new Date(chat.lastMessageDate).getTime() - new Date().getTime()) / 36e5)} godzin temu`}</span>
                   </ListElementUpperRow>
                   <span>{chat.messages[0]?.text || 'Zacznij pisać już teraz!'}</span>
