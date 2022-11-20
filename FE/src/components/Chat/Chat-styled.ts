@@ -79,8 +79,12 @@ export const ChatHeader = styled.div`
   }
 `;
 
-export const LeftPanelWrapper = styled.div`
-  grid-area: 2 / 1 / 3 / 2;
+interface PanelProps {
+  isChatActive: boolean;
+}
+
+export const LeftPanelWrapper = styled.div<PanelProps>`
+  grid-area: ${({ isChatActive }) => (isChatActive ? '2 / 1 / 3 / 2' : '2 / 1 / 3 / 3')};
   border-radius: 10px;
   border: 2px solid ${({ theme }) => theme.colors.grey};
   padding: 5px;
@@ -232,7 +236,8 @@ export const ListElementWrapper = styled.div`
   }
 `;
 
-export const RightPanelWrapper = styled.div`
+export const RightPanelWrapper = styled.div<PanelProps>`
+  display: ${({ isChatActive }) => (isChatActive ? 'block' : 'none')};
   grid-area: 2 / 2 / 3 / 3;
   background-color: ${({ theme }) => theme.colors.grey};
   border-radius: 10px;
@@ -256,12 +261,6 @@ export const RightPanelHeaderContent = styled.div`
   height: 4em;
 `;
 
-export const RightPanelConversation = styled.div`
-  flex-grow: 1;
-  border-top: 1px solid ${({ theme }) => theme.colors.lightGrey};
-  border-bottom: 1px solid ${({ theme }) => theme.colors.lightGrey};
-`;
-
 export const RightPanelBottomWrapper = styled.div`
   height: 3em;
   display: flex;
@@ -279,4 +278,96 @@ export const RightPanelBottomWrapper = styled.div`
       outline: none;
     }
   }
+`;
+
+export const UserInputWrapper = styled.div`
+  background-color: ${({ theme }) => theme.colors.tertiary};
+  display: flex;
+  align-items: center;
+  margin: 20px 0 20px;
+  height: 55px;
+  width: 100%;
+  max-width: 320px;
+  padding: 10px 15px;
+  border: 2px solid;
+  border-color: ${({ theme }) => theme.colors.tertiary};
+`;
+
+export const UserInput = styled.input`
+  width: 100%;
+  height: 100%;
+  margin-left: 20px;
+  border: none;
+  flex-grow: 1;
+  font-size: ${({ theme }) => theme.fontSize.l};
+  background-color: ${({ theme }) => theme.colors.tertiary};
+  ::placeholder {
+    color: ${({ theme }) => theme.colors.placeholder};
+    font-size: ${({ theme }) => theme.fontSize.s};
+    letter-spacing: 0.08em;
+  }
+  &:focus {
+    outline: none;
+  }
+`;
+
+export const DarkIconStyleWrapper = styled(IconStyleWrapper)`
+  ${StyledIconBase} {
+    color: ${({ theme }) => theme.colors.placeholder};
+  }
+  &:hover {
+    cursor: default;
+  }
+`;
+
+export const ModalHeader = styled.h2`
+  margin: 0 35px;
+`;
+
+export const PrimaryButton = styled.button`
+  height: 55px;
+  width: 100%;
+  max-width: 320px;
+  margin: 20px 0 30px;
+  background-color: ${({ theme }) => theme.colors.primary};
+  font-size: ${({ theme }) => theme.fontSize.l};
+  color: ${({ theme }) => theme.colors.white};
+  border-radius: 100px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  transition: opacity 0.5s;
+
+  &:hover {
+    opacity: 0.9;
+    transition: opacity 0.5s;
+  }
+`;
+
+export const RightPanelConversation = styled.div`
+  display: flex;
+  flex-direction: column-reverse;
+  flex-grow: 1;
+  overflow: auto;
+  border-top: 1px solid ${({ theme }) => theme.colors.lightGrey};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.lightGrey};
+`;
+
+export const ReceivedMessage = styled.div`
+  margin-bottom: 10px;
+  background-color: #ddd;
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+  text-align: left;
+  padding: 5px;
+  color: #000;
+`;
+
+export const SentMessage = styled.div`
+  margin-bottom: 10px;
+  background-color: ${({ theme }) => theme.colors.primary};
+  color: #fff;
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
+  text-align: right;
+  padding: 5px;
 `;

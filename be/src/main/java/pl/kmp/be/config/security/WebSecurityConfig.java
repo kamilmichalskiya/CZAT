@@ -11,12 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import pl.kmp.be.bm.users.control.UsersRepository;
-
-import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -37,20 +32,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // @formatter:off
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/chats/**").authenticated()
+                .antMatchers("/api/chats/**","/api/advanced").authenticated()
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()
                 .loginPage("/")
                 .loginProcessingUrl("/api/login")
-                .successHandler((request, response, authentication) ->{
-                    response.setStatus(HttpStatus.OK.value());
-                    response.addHeader("Access-Control-Allow-Origin","*");
-                })
-                .failureHandler((request, response, exception) ->{
-                    response.setStatus(HttpStatus.UNAUTHORIZED.value());
-                    response.addHeader("Access-Control-Allow-Origin","*");
-                })
+                .successHandler((request, response, authentication) ->response.setStatus(HttpStatus.OK.value()))
+                .failureHandler((request, response, exception) ->response.setStatus(HttpStatus.UNAUTHORIZED.value()))
                 .and()
                 .logout()
                 .logoutUrl("/api/logout")
@@ -61,15 +50,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST"));
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
     }
 }

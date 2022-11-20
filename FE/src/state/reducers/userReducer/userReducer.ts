@@ -7,7 +7,7 @@ interface LoginState {
   userData: {
     isRegistered: boolean;
     isLoggedIn: boolean;
-    login?: string;
+    username?: string;
     password?: string;
   };
 }
@@ -24,7 +24,7 @@ const initialState = {
 const userDataInitialState = {
   isRegistered: false,
   isLoggedIn: false,
-  login: '',
+  username: '',
   password: '',
 };
 
